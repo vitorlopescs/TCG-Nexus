@@ -1,0 +1,25 @@
+<map id="TCGCore/nexusdbmanager.h" name="TCGCore/nexusdbmanager.h">
+<area shape="rect" id="Node000001" title="Camada de persistência do TCG Nexus: usuários, catálogo de cartas e estoque local." alt="" coords="461,5,667,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,120,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="477,33,134,81,133,76,476,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="144,79,235,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="502,33,249,81,248,76,501,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="259,79,341,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="522,33,355,78,354,73,521,28"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="366,79,437,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="539,33,442,75,439,71,537,28"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="461,79,558,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="557,33,529,69,524,66,553,29"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="582,79,655,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="575,29,604,66,599,69,571,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="679,79,758,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="590,28,682,70,680,75,588,33"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="782,79,877,104"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="607,28,774,72,772,78,606,33"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="901,79,976,104"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="632,28,888,76,887,81,631,33"/>
+<area shape="rect" id="Node000011" href="$tcgcore__global_8h.html" title="Macros de exportação/importação de símbolos para a biblioteca TCGCore." alt="" coords="1001,79,1130,104"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="647,28,987,76,987,81,646,33"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1000,152,1131,177"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="1068,104,1068,138,1063,138,1063,104"/>
+</map>
