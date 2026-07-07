@@ -96,3 +96,6 @@ private:
     QString perfil;           ///< Perfil autenticado: "ADMIN", "LOJISTA" ou vazio.
 };
 #endif // LOGINDIALOG_H
+
+
+//teste de commit 
