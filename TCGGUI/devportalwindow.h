@@ -2,6 +2,7 @@
 #define DEVPORTALWINDOW_H
 
 #include <QMainWindow>
+#include <QApplication>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
@@ -12,6 +13,7 @@
 #include <QMessageBox>
 #include <QWidget>
 #include "nexusdbmanager.h"
+#include "logindialog.h"
 
 /**
  * @file devportalwindow.h
@@ -33,6 +35,7 @@ public:
      * @brief Constrói a janela do DevPortal e monta o layout de widgets.
      * @param parent Widget pai (opcional, padrão nullptr).
      */
+    //Crio a tela de dev
     explicit DevPortalWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
         setWindowTitle("Nexus DevPortal - Administração");
         resize(440, 340);
@@ -104,8 +107,17 @@ public:
                 QMessageBox::warning(this, "Erro", "Usuário já existe.");
             }
         });
-    }
 
+        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
+
+        layout->addWidget(btnVoltar);
+
+        connect(btnVoltar, &QPushButton::clicked, this, [this]() {
+            this->close();
+            qApp->exit(1000);
+        });
+    }
+//atributos
 private:
     QPushButton *btnImportarJson;      ///< Botão que abre o seletor de arquivo JSON.
     QLabel *lblStatusImportacao;       ///< Rótulo com o resultado da última importação.

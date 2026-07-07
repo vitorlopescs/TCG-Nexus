@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QComboBox>
+#include <QApplication>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QListWidget>
@@ -15,6 +16,7 @@
 #include <QMessageBox>
 #include <QWidget>
 #include "nexusdbmanager.h"
+#include "logindialog.h"
 
 /**
  * @file storedashwindow.h
@@ -36,6 +38,7 @@ public:
      * @brief Constrói a janela do StoreDash e monta o layout de widgets.
      * @param parent Widget pai (opcional, padrão nullptr).
      */
+    //Inicia a tela do lojista
     explicit StoreDashWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
         setWindowTitle("Nexus StoreDash - Gestão de Estoque");
         resize(480, 440);
@@ -89,8 +92,15 @@ public:
         layoutEstoque->addWidget(spinPreco);
         layoutEstoque->addWidget(btnAdicionarEstoque);
 
-        lblStatusEstoque = new QLabel("Nenhum item adicionado ainda.", this);
+        lblStatusEstoque = new QLabel(this);
         lblStatusEstoque->setObjectName("lblStatusEstoque");
+
+        int itensAtuais = NexusDbManager::getInstance().stockItemCount();
+        if (itensAtuais > 0) {
+            lblStatusEstoque->setText(QString("Seu estoque possui %1 tipos de cartas diferentes.").arg(itensAtuais));
+        } else {
+            lblStatusEstoque->setText("Nenhum item adicionado ao estoque ainda.");
+        }
 
         layout->addWidget(groupBusca);
         layout->addWidget(groupEstoque);
@@ -123,14 +133,27 @@ public:
             QString cardId = itemSelecionado->data(Qt::UserRole).toString();
             bool ok = NexusDbManager::getInstance().addCardToStock(cardId, spinQuantidade->value(), spinPreco->value());
             if (ok) {
-                lblStatusEstoque->setText(QString("Item adicionado ao estoque com sucesso! Total de itens no estoque: %1")
-                                               .arg(NexusDbManager::getInstance().stockItemCount()));
+                lblStatusEstoque->setText(QString("%1 unidades adicionadas! Total de tipos de cartas no estoque: %2")
+                                              .arg(spinQuantidade->value())
+                                              .arg(NexusDbManager::getInstance().stockItemCount()));
             } else {
                 lblStatusEstoque->setText("Falha ao adicionar item ao estoque.");
             }
         });
+
+        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
+
+        layout->addWidget(btnVoltar);
+
+        connect(btnVoltar, &QPushButton::clicked, this, [this]() {
+            this->close();
+
+            qApp->exit(1000);
+        });
+
     }
 
+// atributos
 private:
     QComboBox *comboAtributo;           ///< Seletor do atributo técnico usado na busca.
     QLineEdit *txtValorBusca;           ///< Campo com o valor (ou trecho) a buscar.

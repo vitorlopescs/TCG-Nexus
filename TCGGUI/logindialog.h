@@ -30,6 +30,7 @@ public:
      * @brief Constrói o dialog de login e monta o layout de widgets.
      * @param parent Widget pai (opcional, padrão nullptr).
      */
+    //Criacao da tela
     explicit LoginDialog(QWidget *parent = nullptr) : QDialog(parent) {
         setWindowTitle("TCG Nexus - Autenticação");
         resize(320, 170);
@@ -52,6 +53,7 @@ public:
         layout->addWidget(txtSenha);
         layout->addWidget(btnEntrar);
 
+        //Tento fazer login
         connect(btnEntrar, &QPushButton::clicked, this, &LoginDialog::tentarLogin);
     }
 
@@ -59,6 +61,7 @@ public:
      * @brief Retorna o perfil autenticado na última tentativa de login bem-sucedida.
      * @return QString "ADMIN" ou "LOJISTA". Vazio se ainda não houve login com sucesso.
      */
+    //retorna o perfil
     QString getPerfil() const { return perfil; }
 
 private slots:
@@ -69,16 +72,23 @@ private slots:
      * sucesso, guarda o perfil e chama accept(); caso contrário, exibe a
      * mensagem "Login Invalido" (conforme critério de aceitação do Requisito 3).
      */
+    //Tento fazer o login
     void tentarLogin() {
+        //Pego o perfil
         QString perfilEncontrado = NexusDbManager::getInstance().authenticateUser(txtLogin->text(), txtSenha->text());
+        //Se tiver, aceita
         if (!perfilEncontrado.isEmpty()) {
             perfil = perfilEncontrado;
             accept();
+        //Senao existir, da erro
         } else {
             QMessageBox::warning(this, "Erro", "Login Invalido");
+            txtSenha->clear();
+            txtSenha->setFocus();
         }
     }
 
+    //atrivutos do login
 private:
     QLineEdit *txtLogin;      ///< Campo de entrada do usuário.
     QLineEdit *txtSenha;      ///< Campo de entrada da senha (modo password).
