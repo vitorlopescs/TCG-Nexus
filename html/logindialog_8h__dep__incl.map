@@ -1,5 +1,13 @@
 <map id="TCGGUI/logindialog.h" name="TCGGUI/logindialog.h">
-<area shape="rect" id="Node000001" title="Tela de autenticação do TCG Nexus (define o perfil ADMIN ou LOJISTA)." alt="" coords="5,5,165,31"/>
-<area shape="rect" id="Node000002" href="$main_8cpp.html" title="Ponto de entrada do executável TCGGUI." alt="" coords="17,79,153,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,44,88,79,83,79,83,44"/>
+<area shape="rect" id="Node000001" title="Tela de autenticação do TCG Nexus (define o perfil ADMIN ou LOJISTA)." alt="" coords="161,5,321,31"/>
+<area shape="rect" id="Node000002" href="$devportalwindow_8h.html" title="Janela do módulo DevPortal: ingestão de dados oficiais e cadastro de usuários." alt="" coords="5,79,204,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,39,128,81,126,76,206,34"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html" title="Ponto de entrada do executável TCGGUI." alt="" coords="143,152,279,177"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="238,45,216,152,211,151,233,44"/>
+<area shape="rect" id="Node000004" href="$storedashwindow_8h.html" title="Janela do módulo StoreDash: busca de cartas por atributo e gestão de estoque local." alt="" coords="279,79,480,104"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="276,34,358,76,355,81,274,39"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="134,109,195,150,192,154,132,114"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="341,112,240,154,238,149,339,107"/>
+<area shape="rect" id="Node000005" href="$test__storedash_8cpp.html" title="Teste automatizado de GUI (QTest) do módulo StoreDash." alt="" coords="303,152,511,177"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="391,116,405,151,400,153,387,118"/>
 </map>

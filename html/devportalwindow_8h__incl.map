@@ -1,47 +1,59 @@
 <map id="TCGGUI/devportalwindow.h" name="TCGGUI/devportalwindow.h">
-<area shape="rect" id="Node000001" title="Janela do módulo DevPortal: ingestão de dados oficiais e cadastro de usuários." alt="" coords="560,5,759,31"/>
+<area shape="rect" id="Node000001" title="Janela do módulo DevPortal: ingestão de dados oficiais e cadastro de usuários." alt="" coords="472,5,671,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,121,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="560,32,368,53,136,81,135,76,367,47,560,27"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="146,79,253,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="581,33,267,81,266,76,580,28"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="277,79,361,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="604,33,376,81,375,76,603,28"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="385,79,488,104"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="624,33,486,77,485,72,623,28"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="513,79,579,104"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="643,33,577,74,574,69,640,28"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="604,79,715,104"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="662,31,662,65,657,65,657,31"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="739,79,835,104"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="681,28,755,69,753,74,679,33"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="860,79,957,104"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="700,28,856,72,854,77,699,33"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="982,79,1097,104"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="721,28,969,74,968,79,720,33"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="1121,79,1200,104"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="759,27,919,47,1108,76,1107,81,918,53,758,33"/>
-<area shape="rect" id="Node000012" href="$nexusdbmanager_8h.html" title="Camada de persistência do TCG Nexus: usuários, catálogo de cartas e estoque local." alt="" coords="1225,79,1371,104"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="759,27,1211,76,1211,81,759,32"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="739,152,854,177"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="1225,105,868,154,867,149,1224,100"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="878,152,969,177"/>
-<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="1236,107,983,154,982,149,1235,101"/>
-<area shape="rect" id="Node000015" title=" " alt="" coords="993,152,1075,177"/>
-<area shape="poly" id="edge14_Node000012_Node000015" title=" " alt="" coords="1256,107,1089,151,1088,146,1255,101"/>
-<area shape="rect" id="Node000016" title=" " alt="" coords="1100,152,1171,177"/>
-<area shape="poly" id="edge15_Node000012_Node000016" title=" " alt="" coords="1273,106,1176,149,1173,144,1271,102"/>
-<area shape="rect" id="Node000017" title=" " alt="" coords="1195,152,1292,177"/>
-<area shape="poly" id="edge16_Node000012_Node000017" title=" " alt="" coords="1291,106,1263,143,1258,140,1287,103"/>
-<area shape="rect" id="Node000018" title=" " alt="" coords="1316,152,1389,177"/>
-<area shape="poly" id="edge17_Node000012_Node000018" title=" " alt="" coords="1309,103,1338,140,1333,143,1305,106"/>
-<area shape="rect" id="Node000019" title=" " alt="" coords="1413,152,1492,177"/>
-<area shape="poly" id="edge18_Node000012_Node000019" title=" " alt="" coords="1324,102,1416,144,1414,149,1322,106"/>
-<area shape="rect" id="Node000020" title=" " alt="" coords="1516,152,1611,177"/>
-<area shape="poly" id="edge19_Node000012_Node000020" title=" " alt="" coords="1341,101,1508,146,1506,151,1340,107"/>
-<area shape="rect" id="Node000021" title=" " alt="" coords="1635,152,1710,177"/>
-<area shape="poly" id="edge20_Node000012_Node000021" title=" " alt="" coords="1366,101,1622,149,1621,154,1365,107"/>
-<area shape="rect" id="Node000022" href="$tcgcore__global_8h.html" title="Macros de exportação/importação de símbolos para a biblioteca TCGCore." alt="" coords="1735,152,1864,177"/>
-<area shape="poly" id="edge21_Node000012_Node000022" title=" " alt="" coords="1372,100,1721,149,1720,154,1371,105"/>
-<area shape="rect" id="Node000023" title=" " alt="" coords="1734,225,1865,251"/>
-<area shape="poly" id="edge22_Node000022_Node000023" title=" " alt="" coords="1802,178,1802,212,1797,212,1797,178"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="482,33,135,81,135,76,481,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="145,79,251,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="512,33,265,80,264,75,511,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="113,152,219,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="521,33,441,54,354,81,271,115,201,148,199,144,268,110,352,76,440,49,520,28"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="244,152,328,177"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="524,33,462,53,397,81,349,112,310,145,307,140,346,108,394,76,460,48,523,28"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="711,79,813,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="603,28,719,71,717,76,601,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="353,152,419,177"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="507,33,459,51,437,64,417,80,400,109,391,139,386,138,395,107,413,77,434,60,457,46,505,28"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="543,152,653,177"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="576,31,596,138,591,139,571,32"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="838,79,934,104"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="622,28,825,74,824,79,621,33"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="959,79,1056,104"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="647,28,946,76,945,81,646,33"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="678,152,793,177"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="583,29,615,63,656,102,708,142,705,146,652,106,611,67,580,33"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1080,79,1159,104"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="671,26,851,45,1066,76,1066,81,851,50,671,31"/>
+<area shape="rect" id="Node000013" href="$nexusdbmanager_8h.html" title="Camada de persistência do TCG Nexus: usuários, catálogo de cartas e estoque local." alt="" coords="817,152,963,177"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="589,29,647,69,701,102,765,127,828,146,826,151,763,132,698,106,644,73,586,33"/>
+<area shape="rect" id="Node000025" href="$logindialog_8h.html" title="Tela de autenticação do TCG Nexus (define o perfil ADMIN ou LOJISTA)." alt="" coords="427,79,534,104"/>
+<area shape="poly" id="edge24_Node000001_Node000025" title=" " alt="" coords="558,33,508,72,505,68,555,29"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="331,225,446,251"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="817,178,460,228,459,223,816,173"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="470,225,561,251"/>
+<area shape="poly" id="edge14_Node000013_Node000015" title=" " alt="" coords="828,180,575,228,574,222,827,175"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="585,225,667,251"/>
+<area shape="poly" id="edge15_Node000013_Node000016" title=" " alt="" coords="848,180,681,225,680,219,847,175"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="692,225,763,251"/>
+<area shape="poly" id="edge16_Node000013_Node000017" title=" " alt="" coords="865,180,768,222,765,217,863,175"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="787,225,884,251"/>
+<area shape="poly" id="edge17_Node000013_Node000018" title=" " alt="" coords="883,179,855,216,850,213,879,176"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="908,225,981,251"/>
+<area shape="poly" id="edge18_Node000013_Node000019" title=" " alt="" coords="901,176,930,213,925,216,897,179"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="1005,225,1084,251"/>
+<area shape="poly" id="edge19_Node000013_Node000020" title=" " alt="" coords="916,175,1008,217,1006,222,914,180"/>
+<area shape="rect" id="Node000021" title=" " alt="" coords="1108,225,1203,251"/>
+<area shape="poly" id="edge20_Node000013_Node000021" title=" " alt="" coords="933,175,1100,219,1098,224,932,180"/>
+<area shape="rect" id="Node000022" title=" " alt="" coords="1227,225,1302,251"/>
+<area shape="poly" id="edge21_Node000013_Node000022" title=" " alt="" coords="958,175,1214,222,1213,228,957,180"/>
+<area shape="rect" id="Node000023" href="$tcgcore__global_8h.html" title="Macros de exportação/importação de símbolos para a biblioteca TCGCore." alt="" coords="1327,225,1456,251"/>
+<area shape="poly" id="edge22_Node000013_Node000023" title=" " alt="" coords="964,174,1313,223,1312,228,963,179"/>
+<area shape="rect" id="Node000024" title=" " alt="" coords="1326,299,1457,324"/>
+<area shape="poly" id="edge23_Node000023_Node000024" title=" " alt="" coords="1394,251,1394,285,1389,285,1389,251"/>
+<area shape="poly" id="edge27_Node000025_Node000004" title=" " alt="" coords="431,107,231,152,230,146,430,101"/>
+<area shape="poly" id="edge26_Node000025_Node000005" title=" " alt="" coords="450,107,331,150,330,145,448,102"/>
+<area shape="poly" id="edge29_Node000025_Node000007" title=" " alt="" coords="467,106,414,146,411,141,464,102"/>
+<area shape="poly" id="edge28_Node000025_Node000008" title=" " alt="" coords="501,102,568,142,566,147,498,106"/>
+<area shape="poly" id="edge30_Node000025_Node000011" title=" " alt="" coords="522,101,682,146,681,151,521,107"/>
+<area shape="poly" id="edge31_Node000025_Node000013" title=" " alt="" coords="535,99,812,147,811,152,534,105"/>
+<area shape="rect" id="Node000026" title=" " alt="" coords="443,152,518,177"/>
+<area shape="poly" id="edge25_Node000025_Node000026" title=" " alt="" coords="483,104,483,138,478,138,478,104"/>
 </map>
