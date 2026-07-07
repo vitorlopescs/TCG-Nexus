@@ -10,7 +10,9 @@ SOURCES += \
 # (Q_OBJECT) também neste projeto. Sem isso o link falha com
 # "undefined reference to vtable for StoreDashWindow".
 HEADERS += \
-    ../TCGGUI/storedashwindow.h
+../TCGGUI/storedashwindow.h \
+    ../TCGGUI/devportalwindow.h \
+    ../TCGGUI/logindialog.h
 
 INCLUDEPATH += ../TCGGUI ../TCGCore
 LIBS += -L../TCGCore -lTCGCore

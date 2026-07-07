@@ -93,7 +93,7 @@ private slots:
         QTest::mouseClick(btnAdicionarEstoque, Qt::LeftButton);
         QTest::qWait(100);
 
-        QVERIFY(lblStatusEstoque->text().contains("sucesso"));
+        QVERIFY(lblStatusEstoque->text().contains("unidades adicionadas"));
         QCOMPARE(NexusDbManager::getInstance().stockItemCount(), 1);
     }
 };
