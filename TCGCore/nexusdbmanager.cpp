@@ -14,8 +14,10 @@
 #include <QCryptographicHash>
 #include <QStringList>
 
+//Inicializar o banco de dados
 bool NexusDbManager::initDatabase() {
     db = QSqlDatabase::addDatabase("QSQLITE");
+    //Cria um banco de dados na memoria RAM
     db.setDatabaseName(":memory:");
 
     if (!db.open()) {
@@ -55,19 +57,27 @@ bool NexusDbManager::initDatabase() {
     return true;
 }
 
+//Transforma a senha em um codigo embaralhado e irreversivel (banco de dados)
 QString NexusDbManager::hashPassword(const QString &senha) {
     return QString(QCryptographicHash::hash(senha.toUtf8(), QCryptographicHash::Sha256).toHex());
 }
 
+//Registra usuario
 bool NexusDbManager::registerUser(const QString &login, const QString &senha, const QString &perfil) {
+    //Cria uma consulta para verificar se usuario ja existe
     QSqlQuery checa;
+    //Retorna numero de linhas que os logins sao iguais ao que acabou de registrar
     checa.prepare("SELECT COUNT(*) FROM usuarios WHERE login = :login");
+    //Coloco o login que quero saber
     checa.bindValue(":login", login);
+    //Vejo quantos existem
     checa.exec();
+    //Se for maior que zero, ja existe o usuario
     if (checa.next() && checa.value(0).toInt() > 0) {
         return false; // usuario ja existe
     }
 
+    //Cria uma consulta para inserção
     QSqlQuery insere;
     insere.prepare("INSERT INTO usuarios (login, senha_hash, perfil) VALUES (:login, :hash, :perfil)");
     insere.bindValue(":login", login);
@@ -76,7 +86,9 @@ bool NexusDbManager::registerUser(const QString &login, const QString &senha, co
     return insere.exec();
 }
 
+//Autentica usuario
 QString NexusDbManager::authenticateUser(const QString &login, const QString &senha) {
+    //Cria uma consulta
     QSqlQuery query;
     query.prepare("SELECT perfil FROM usuarios WHERE login = :login AND senha_hash = :hash");
     query.bindValue(":login", login);
@@ -89,6 +101,7 @@ QString NexusDbManager::authenticateUser(const QString &login, const QString &se
     return QString();
 }
 
+//Converte de JSON para String
 QString NexusDbManager::jsonValueToString(const QJsonValue &value) const {
     if (value.isArray()) {
         QStringList partes;
@@ -110,15 +123,18 @@ QString NexusDbManager::jsonValueToString(const QJsonValue &value) const {
     return QString(); // valor nulo/ausente -> string vazia
 }
 
+//Inserir cartas no banco de dados
 int NexusDbManager::ingestCardsFromJson(const QByteArray &jsonData) {
     QJsonParseError erroParse;
     QJsonDocument doc = QJsonDocument::fromJson(jsonData, &erroParse);
 
+    //Arquivo corrompido
     if (erroParse.error != QJsonParseError::NoError) {
         qDebug() << "Erro ao parsear JSON:" << erroParse.errorString();
         return -1;
     }
 
+    //Verifico se é array ou apenas um objeto
     QJsonArray cartas;
     if (doc.isArray()) {
         cartas = doc.array();
@@ -158,6 +174,7 @@ int NexusDbManager::ingestCardsFromJson(const QByteArray &jsonData) {
         insere.bindValue(":rarity", obj.value("rarity").toString());
         insere.bindValue(":artist", obj.value("artist").toString());
 
+        //Anoto o numero de cartas importadas
         if (insere.exec()) {
             importadas++;
         } else {
@@ -167,6 +184,7 @@ int NexusDbManager::ingestCardsFromJson(const QByteArray &jsonData) {
     return importadas;
 }
 
+//Procuro os arquivos no computador
 int NexusDbManager::ingestCardsFromJsonFile(const QString &filePath) {
     QFile arquivo(filePath);
     if (!arquivo.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -178,6 +196,7 @@ int NexusDbManager::ingestCardsFromJsonFile(const QString &filePath) {
     return ingestCardsFromJson(dados);
 }
 
+//Filtro que pesquisa a carta
 QVector<QVariantMap> NexusDbManager::searchCardsByAttribute(const QString &atributo, const QString &valor) {
     QVector<QVariantMap> resultados;
 
@@ -202,6 +221,7 @@ QVector<QVariantMap> NexusDbManager::searchCardsByAttribute(const QString &atrib
     return resultados;
 }
 
+//Adiciona carta no estoque com o preço
 bool NexusDbManager::addCardToStock(const QString &cardId, int quantidade, double preco) {
     QSqlQuery insere;
     insere.prepare("INSERT OR REPLACE INTO estoque (carta_id, quantidade, preco) VALUES (:id, :qtd, :preco)");
@@ -211,6 +231,7 @@ bool NexusDbManager::addCardToStock(const QString &cardId, int quantidade, doubl
     return insere.exec();
 }
 
+//Conto todos os itens do estoque
 int NexusDbManager::stockItemCount() {
     QSqlQuery query("SELECT COUNT(*) FROM estoque");
     if (query.next()) {
