@@ -12,34 +12,27 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWidget>
-#include <QTableWidget> 
+#include <QTableWidget>
 #include <QHeaderView>
 #include "nexusdbmanager.h"
 #include "logindialog.h"
 
 /**
  * @file devportalwindow.h
- * @brief Janela do módulo DevPortal: ingestão de dados oficiais e cadastro de usuários.
+ * @brief Janela do módulo DevPortal: ingestão de dados oficiais, cadastro e gestão de usuários.
  */
 
-/**
- * @class DevPortalWindow
- * @brief Janela principal do perfil ADMIN.
- */
 class DevPortalWindow : public QMainWindow {
     Q_OBJECT
 public:
-    /**
-     * @brief Constrói a janela do DevPortal e monta o layout de widgets.
-     * @param parent Widget pai (opcional, padrão nullptr).
-     */
     explicit DevPortalWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
         setWindowTitle("Nexus DevPortal - Administração");
-        resize(440, 380);
+        resize(550, 650); // Altura aumentada para comportar a tabela perfeitamente
 
         auto *central = new QWidget(this);
         auto *layout = new QVBoxLayout(central);
 
+        // --- GRUPO 1: Sincronizar Base de Dados ---
         auto *groupImport = new QGroupBox("Sincronizar Base de Dados (Requisito 1)", this);
         auto *layoutImport = new QVBoxLayout(groupImport);
         btnImportarJson = new QPushButton("Importar Arquivo JSON de Cartas", groupImport);
@@ -49,6 +42,7 @@ public:
         layoutImport->addWidget(btnImportarJson);
         layoutImport->addWidget(lblStatusImportacao);
 
+        // --- GRUPO 2: Cadastro de Usuários ---
         auto *groupUsuarios = new QGroupBox("Cadastro de Usuários (Requisitos 4 e 5)", this);
         auto *layoutUsuarios = new QVBoxLayout(groupUsuarios);
         
@@ -79,10 +73,41 @@ public:
         layoutUsuarios->addWidget(comboPerfil);
         layoutUsuarios->addWidget(btnCadastrarUsuario);
 
+        // --- GRUPO 3: Gestão de Usuários (Tabela) ---
+        auto *groupLista = new QGroupBox("Gestão de Usuários (Inativar Acesso)", this);
+        auto *layoutLista = new QVBoxLayout(groupLista);
+        
+        tabelaUsuarios = new QTableWidget(groupLista);
+        tabelaUsuarios->setObjectName("tabelaUsuarios");
+        tabelaUsuarios->setColumnCount(4);
+        tabelaUsuarios->setHorizontalHeaderLabels({"ID", "Nome", "E-mail", "Status"});
+        
+        // Ajustes visuais da tabela
+        tabelaUsuarios->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); 
+        tabelaUsuarios->setSelectionBehavior(QAbstractItemView::SelectRows); 
+        tabelaUsuarios->setSelectionMode(QAbstractItemView::SingleSelection);
+        
+        btnInativar = new QPushButton("Inativar Usuário Selecionado", groupLista);
+        btnInativar->setObjectName("btnInativar");
+        
+        layoutLista->addWidget(tabelaUsuarios);
+        layoutLista->addWidget(btnInativar);
+
+        // --- MONTANDO O LAYOUT FINAL ---
         layout->addWidget(groupImport);
         layout->addWidget(groupUsuarios);
+        layout->addWidget(groupLista);
+
+        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
+        layout->addWidget(btnVoltar);
+
         setCentralWidget(central);
 
+        // --- INICIALIZAÇÃO DE DADOS ---
+        carregarUsuarios();
+
+        // --- CONEXÕES (SIGNAIS E SLOTS) ---
+        
         connect(btnImportarJson, &QPushButton::clicked, [this]() {
             QString caminho = QFileDialog::getOpenFileName(this, "Selecionar dataset de cartas", QString(), "JSON (*.json)");
             if (caminho.isEmpty()) return;
@@ -112,14 +137,32 @@ public:
                 txtNovoNome->clear();
                 txtNovoEmail->clear();
                 txtNovaSenha->clear();
+                carregarUsuarios(); // Recarrega a tabela imediatamente após o cadastro
             } else {
-                // Mensagem de erro corrigida segundo o BDD
                 QMessageBox::warning(this, "Erro", "E-mail já está em uso");
             }
         });
 
-        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
-        layout->addWidget(btnVoltar);
+        connect(btnInativar, &QPushButton::clicked, [this]() {
+            int row = tabelaUsuarios->currentRow();
+            if(row < 0) {
+                QMessageBox::warning(this, "Aviso", "Selecione um usuário na tabela para inativar.");
+                return;
+            }
+            
+            // Extrai o ID da primeira coluna da linha selecionada
+            int idTarget = tabelaUsuarios->item(row, 0)->text().toInt();
+            
+            // Simula o ID do Administrador logado atual (neste contexto MVP local)
+            int idLogado = NexusDbManager::getInstance().getLoggedUserId("admin@tcgnexus.com"); 
+            
+            if(NexusDbManager::getInstance().deactivateUser(idTarget, idLogado)) {
+                QMessageBox::information(this, "Sucesso", "Acesso de usuário inativado!");
+                carregarUsuarios(); // Recarrega a tabela imediatamente após inativar
+            } else {
+                QMessageBox::warning(this, "Erro", "Não é possível inativar a própria conta");
+            }
+        });
 
         connect(btnVoltar, &QPushButton::clicked, this, [this]() {
             this->close();
@@ -128,12 +171,45 @@ public:
     }
 
 private:
-    QPushButton *btnImportarJson;      ///< Botão que abre o seletor de arquivo JSON.
-    QLabel *lblStatusImportacao;       ///< Rótulo com o resultado da última importação.
-    QLineEdit *txtNovoNome;            ///< Campo de Nome completo do novo usuário.
-    QLineEdit *txtNovoEmail;           ///< Campo de e-mail do novo usuário a cadastrar.
-    QLineEdit *txtNovaSenha;           ///< Campo de senha do novo usuário a cadastrar.
-    QComboBox *comboPerfil;            ///< Seletor do perfil de acesso (LOJISTA/ADMIN).
-    QPushButton *btnCadastrarUsuario;  ///< Botão que efetiva o cadastro do usuário.
+    QPushButton *btnImportarJson;      
+    QLabel *lblStatusImportacao;       
+    QLineEdit *txtNovoNome;            
+    QLineEdit *txtNovoEmail;           
+    QLineEdit *txtNovaSenha;           
+    QComboBox *comboPerfil;            
+    QPushButton *btnCadastrarUsuario;  
+    
+    QTableWidget *tabelaUsuarios;      
+    QPushButton *btnInativar;          
+
+    /**
+     * @brief Limpa e popula a tabela de usuários com os dados atualizados do banco.
+     */
+    void carregarUsuarios() {
+        tabelaUsuarios->setRowCount(0); // Limpa a tabela
+        auto users = NexusDbManager::getInstance().getAllUsers();
+        
+        for(int i = 0; i < users.size(); ++i) {
+            tabelaUsuarios->insertRow(i);
+            
+            // Cria os itens para cada célula
+            auto *itemId = new QTableWidgetItem(users[i]["id"].toString());
+            auto *itemNome = new QTableWidgetItem(users[i]["nome"].toString());
+            auto *itemEmail = new QTableWidgetItem(users[i]["email"].toString());
+            auto *itemStatus = new QTableWidgetItem(users[i]["ativo"].toInt() == 1 ? "Ativo" : "Inativo");
+            
+            // Bloqueia a edição direta na célula (somente leitura)
+            itemId->setFlags(itemId->flags() & ~Qt::ItemIsEditable);
+            itemNome->setFlags(itemNome->flags() & ~Qt::ItemIsEditable);
+            itemEmail->setFlags(itemEmail->flags() & ~Qt::ItemIsEditable);
+            itemStatus->setFlags(itemStatus->flags() & ~Qt::ItemIsEditable);
+
+            // Insere os itens na linha
+            tabelaUsuarios->setItem(i, 0, itemId);
+            tabelaUsuarios->setItem(i, 1, itemNome);
+            tabelaUsuarios->setItem(i, 2, itemEmail);
+            tabelaUsuarios->setItem(i, 3, itemStatus);
+        }
+    }
 };
 #endif // DEVPORTALWINDOW_H
