@@ -1,11 +1,6 @@
 /**
  * @file test_storedash.cpp
  * @brief Teste automatizado de GUI (QTest) do módulo StoreDash.
- *
- * Valida o Requisito 2 da Sprint 1: buscar uma carta por atributo técnico e
- * adicioná-la ao estoque local com quantidade e preço definidos. Para isolar
- * o teste de um arquivo externo em disco, o catálogo é semeado diretamente via
- * NexusDbManager::ingestCardsFromJson(), simulando uma ingestão já concluída.
  */
 
 #include <QtTest/QtTest>
@@ -16,21 +11,14 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QLabel>
+#include <QMessageBox>
 #include "storedashwindow.h"
 #include "nexusdbmanager.h"
 
-/**
- * @class TesteStoreDash
- * @brief Suíte de testes de GUI (QTest) para a tela StoreDashWindow.
- */
 class TesteStoreDash : public QObject {
     Q_OBJECT
 
 private slots:
-    /**
-     * @brief Prepara o banco em memória e semeia uma carta de teste antes da suíte,
-     * simulando a conclusão do Requisito 1 (ingestão de metadados JSON).
-     */
     void initTestCase() {
         NexusDbManager::getInstance().initDatabase();
 
@@ -52,18 +40,10 @@ private slots:
         QVERIFY(importadas == 1);
     }
 
-    /**
-     * @brief Verifica se a busca por atributo técnico encontra a carta esperada
-     * e se a adição ao estoque local é concluída com sucesso.
-     *
-     * Simula: selecionar o atributo "name", digitar "Pikachu", clicar em
-     * "Buscar no Catálogo Oficial", selecionar o resultado, definir
-     * quantidade/preço e clicar em "Adicionar ao Estoque".
-     */
-    void testarBuscaPorAtributoEAdicaoAoEstoque() {
+    void testarValidacaoDeQuantidadeEAdicao() {
         StoreDashWindow tela;
         tela.show();
-        QTest::qWaitForWindowExposed(&tela);
+        QVERIFY(QTest::qWaitForWindowExposed(&tela));
 
         auto *comboAtributo = tela.findChild<QComboBox*>("comboAtributo");
         auto *txtValorBusca = tela.findChild<QLineEdit*>("txtValorBusca");
@@ -74,12 +54,6 @@ private slots:
         auto *btnAdicionarEstoque = tela.findChild<QPushButton*>("btnAdicionarEstoque");
         auto *lblStatusEstoque = tela.findChild<QLabel*>("lblStatusEstoque");
 
-        QVERIFY(comboAtributo != nullptr);
-        QVERIFY(btnBuscar != nullptr);
-        QVERIFY(listResultados != nullptr);
-        QVERIFY(btnAdicionarEstoque != nullptr);
-
-        // Busca por atributo "name" = "Pikachu"
         comboAtributo->setCurrentText("name");
         txtValorBusca->setText("Pikachu");
         QTest::mouseClick(btnBuscar, Qt::LeftButton);
@@ -88,15 +62,48 @@ private slots:
         QCOMPARE(listResultados->count(), 1);
         listResultados->setCurrentRow(0);
 
+        spinQuantidade->setValue(0);
+        spinPreco->setValue(10.00);
+        
+        QTest::mouseClick(btnAdicionarEstoque, Qt::LeftButton); 
+        QCOMPARE(NexusDbManager::getInstance().stockItemCount(), 0);
+
         spinQuantidade->setValue(10);
-        spinPreco->setValue(25.90);
         QTest::mouseClick(btnAdicionarEstoque, Qt::LeftButton);
         QTest::qWait(100);
-
         QVERIFY(lblStatusEstoque->text().contains("unidades adicionadas"));
         QCOMPARE(NexusDbManager::getInstance().stockItemCount(), 1);
     }
+
+    void testarAtualizacaoDePreco() {
+        StoreDashWindow tela;
+        tela.show();
+        QVERIFY(QTest::qWaitForWindowExposed(&tela));
+
+        auto *comboAtributo = tela.findChild<QComboBox*>("comboAtributo");
+        auto *txtValorBusca = tela.findChild<QLineEdit*>("txtValorBusca");
+        auto *btnBuscar = tela.findChild<QPushButton*>("btnBuscar");
+        auto *listResultados = tela.findChild<QListWidget*>("listResultados");
+        auto *spinNovoPreco = tela.findChild<QDoubleSpinBox*>("spinNovoPreco");
+        auto *btnAtualizarPreco = tela.findChild<QPushButton*>("btnAtualizarPreco");
+
+        comboAtributo->setCurrentText("name");
+        txtValorBusca->setText("Pikachu");
+        QTest::mouseClick(btnBuscar, Qt::LeftButton);
+        QTest::qWait(100);
+        listResultados->setCurrentRow(0);
+
+        spinNovoPreco->setValue(-10.00);
+        QTest::mouseClick(btnAtualizarPreco, Qt::LeftButton);
+
+        spinNovoPreco->setValue(150.00);
+        QTest::mouseClick(btnAtualizarPreco, Qt::LeftButton);
+        QTest::qWait(100);
+    }
 };
 
-QTEST_MAIN(TesteStoreDash)
+int runTesteStoreDash(int argc, char *argv[]) {
+    TesteStoreDash tc;
+    return QTest::qExec(&tc, argc, argv);
+}
 #include "test_storedash.moc"

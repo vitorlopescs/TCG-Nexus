@@ -14,19 +14,18 @@
 
 bool NexusDbManager::initDatabase() {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(":memory:"); // SQLite embutido em memória para isolamento do MVP
-    if (!db.open()) {
-        qDebug() << "Erro crítico ao inicializar banco SQLite em memória:" << db.lastError().text();
-        return false;
-    }
+    db.setDatabaseName(":memory:");
+    if (!db.open()) return false;
 
     QSqlQuery query;
-    // Tabela estendida para suportar a arquitetura com Salt de segurança dinâmico por usuário
     query.exec("CREATE TABLE usuarios ("
-               "login VARCHAR(50) PRIMARY KEY, "
+               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "email VARCHAR(100) UNIQUE, "
+               "nome VARCHAR(100), "
                "senha_hash VARCHAR(128), "
                "salt VARCHAR(64), "
-               "perfil VARCHAR(20))");
+               "perfil VARCHAR(20), "
+               "ativo INTEGER DEFAULT 1)");
 
     query.exec("CREATE TABLE cartas ("
                "id VARCHAR(50) PRIMARY KEY, "
@@ -47,14 +46,12 @@ bool NexusDbManager::initDatabase() {
                "preco REAL, "
                "FOREIGN KEY(carta_id) REFERENCES cartas(id))");
 
-    // Semente padrão do MVP: Criando conta mestre inicial de segurança
-    registerUser("admin", "123", "ADMIN");
+    registerUser("Administrador Mestre", "admin@tcgnexus.com", "senha123", "ADMIN");
     return true;
 }
 
 QString NexusDbManager::generateSalt() {
     QByteArray bytes;
-    // Gerador criptográfico seguro integrado do Qt
     for(int i = 0; i < 16; ++i) {
         bytes.append(static_cast<char>(QRandomGenerator::global()->bounded(256)));
     }
@@ -62,7 +59,6 @@ QString NexusDbManager::generateSalt() {
 }
 
 QString NexusDbManager::hashPasswordWithSalt(const QString &senha, const QString &salt) {
-    // Simulação do algoritmo PBKDF2 com 10.000 iterações baseadas em SHA-512
     QByteArray derivedKey = senha.toUtf8() + salt.toUtf8();
     for (int i = 0; i < 10000; ++i) {
         derivedKey = QCryptographicHash::hash(derivedKey, QCryptographicHash::Sha512);
@@ -70,31 +66,28 @@ QString NexusDbManager::hashPasswordWithSalt(const QString &senha, const QString
     return QString(derivedKey.toHex());
 }
 
-bool NexusDbManager::registerUser(const QString &login, const QString &senha, const QString &perfil) {
-    if (login.isEmpty() || senha.isEmpty()) return false;
+bool NexusDbManager::registerUser(const QString &nome, const QString &email, const QString &senha, const QString &perfil) {
+    if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) return false;
 
-    QSqlQuery checa;
-    checa.prepare("SELECT COUNT(*) FROM usuarios WHERE login = :login");
-    checa.bindValue(":login", login);
-    checa.exec();
-    if (checa.next() && checa.value(0).toInt() > 0) return false; // Login duplicado barrado
+    if(checkEmailExists(email)) return false;
 
     QString salt = generateSalt();
     QString hash = hashPasswordWithSalt(senha, salt);
 
     QSqlQuery insere;
-    insere.prepare("INSERT INTO usuarios (login, senha_hash, salt, perfil) VALUES (:login, :hash, :salt, :perfil)");
-    insere.bindValue(":login", login);
+    insere.prepare("INSERT INTO usuarios (email, nome, senha_hash, salt, perfil) VALUES (:email, :nome, :hash, :salt, :perfil)");
+    insere.bindValue(":email", email);
+    insere.bindValue(":nome", nome);
     insere.bindValue(":hash", hash);
     insere.bindValue(":salt", salt);
     insere.bindValue(":perfil", perfil);
     return insere.exec();
 }
 
-QString NexusDbManager::authenticateUser(const QString &login, const QString &senha) {
+QString NexusDbManager::authenticateUser(const QString &email, const QString &senha) {
     QSqlQuery query;
-    query.prepare("SELECT senha_hash, salt, perfil FROM usuarios WHERE login = :login");
-    query.bindValue(":login", login);
+    query.prepare("SELECT senha_hash, salt, perfil FROM usuarios WHERE email = :email AND ativo = 1");
+    query.bindValue(":email", email);
     query.exec();
 
     if (query.next()) {
@@ -102,12 +95,59 @@ QString NexusDbManager::authenticateUser(const QString &login, const QString &se
         QString salt = query.value(1).toString();
         QString perfil = query.value(2).toString();
 
-        // Validação criptográfica determinística utilizando o Salt armazenado
         if (hashPasswordWithSalt(senha, salt) == armazenadoHash) {
             return perfil;
         }
     }
-    return QString(); // Falha na autenticação retorna string vazia (Cenário BDD 3)
+    return QString();
+}
+
+bool NexusDbManager::checkEmailExists(const QString &email) {
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM usuarios WHERE email = :email");
+    query.bindValue(":email", email);
+    query.exec();
+    return query.next() && query.value(0).toInt() > 0;
+}
+
+bool NexusDbManager::deactivateUser(int idTarget, int idLogado) {
+    if (idTarget == idLogado) return false;
+    
+    QSqlQuery query;
+    query.prepare("UPDATE usuarios SET ativo = 0 WHERE id = :id");
+    query.bindValue(":id", idTarget);
+    return query.exec();
+}
+
+bool NexusDbManager::updateUserProfile(int idTarget, const QString &novoPerfil) {
+    QSqlQuery query;
+    query.prepare("UPDATE usuarios SET perfil = :perfil WHERE id = :id");
+    query.bindValue(":perfil", novoPerfil);
+    query.bindValue(":id", idTarget);
+    return query.exec();
+}
+
+int NexusDbManager::getLoggedUserId(const QString &email) {
+    QSqlQuery query;
+    query.prepare("SELECT id FROM usuarios WHERE email = :email");
+    query.bindValue(":email", email);
+    if(query.exec() && query.next()) return query.value(0).toInt();
+    return -1;
+}
+
+QVector<QVariantMap> NexusDbManager::getAllUsers() {
+    QVector<QVariantMap> lista;
+    QSqlQuery query("SELECT id, nome, email, perfil, ativo FROM usuarios");
+    while(query.next()) {
+        QVariantMap u;
+        u["id"] = query.value("id");
+        u["nome"] = query.value("nome");
+        u["email"] = query.value("email");
+        u["perfil"] = query.value("perfil");
+        u["ativo"] = query.value("ativo");
+        lista.append(u);
+    }
+    return lista;
 }
 
 QString NexusDbManager::jsonValueToString(const QJsonValue &value) const {
@@ -193,6 +233,15 @@ bool NexusDbManager::addCardToStock(const QString &cardId, int quantidade, doubl
     insere.bindValue(":qtd", quantidade);
     insere.bindValue(":preco", preco);
     return insere.exec();
+}
+
+bool NexusDbManager::updateCardPrice(const QString &cardId, double novoPreco) {
+    if(novoPreco < 0) return false;
+    QSqlQuery update;
+    update.prepare("UPDATE estoque SET preco = :preco WHERE carta_id = :id");
+    update.bindValue(":preco", novoPreco);
+    update.bindValue(":id", cardId);
+    return update.exec();
 }
 
 int NexusDbManager::stockItemCount() {

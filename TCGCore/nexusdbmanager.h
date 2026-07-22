@@ -33,18 +33,20 @@ public:
     int ingestCardsFromJsonFile(const QString &filePath);
     int ingestCardsFromJson(const QByteArray &jsonData);
     
-    // Requisito 3 - Autenticação Forte com Hashing Seguro (RNF 6.7)
-    QString authenticateUser(const QString &login, const QString &senha);
+    QString authenticateUser(const QString &email, const QString &senha);
+    bool registerUser(const QString &nome, const QString &email, const QString &senha, const QString &perfil);
     
-    // Requisito 4 - Cadastro de Usuários
-    bool registerUser(const QString &login, const QString &senha, const QString &perfil);
-    
-    // Requisito 2 - Métodos do Catálogo e Estoque Local
     QVector<QVariantMap> searchCardsByAttribute(const QString &atributo, const QString &valor);
     bool addCardToStock(const QString &cardId, int quantidade, double preco);
+    bool updateCardPrice(const QString &cardId, double novoPreco);
     int stockItemCount();
 
-    // Utilitários de Segurança Corporativa
+    bool checkEmailExists(const QString &email);
+    bool deactivateUser(int idTarget, int idLogado);
+    bool updateUserProfile(int idTarget, const QString &novoPerfil);
+    int getLoggedUserId(const QString &email);
+    QVector<QVariantMap> getAllUsers();
+
     static QString generateSalt();
     static QString hashPasswordWithSalt(const QString &senha, const QString &salt);
 

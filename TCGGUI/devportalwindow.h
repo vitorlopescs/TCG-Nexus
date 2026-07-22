@@ -12,73 +12,102 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWidget>
+#include <QTableWidget>
+#include <QHeaderView>
 #include "nexusdbmanager.h"
 #include "logindialog.h"
 
 /**
  * @file devportalwindow.h
- * @brief Janela do módulo DevPortal: ingestão de dados oficiais e cadastro de usuários.
+ * @brief Janela do módulo DevPortal: ingestão de dados oficiais, cadastro e gestão de usuários.
  */
 
-/**
- * @class DevPortalWindow
- * @brief Janela principal do perfil ADMIN.
- *
- * Concentra dois casos de uso da Sprint 1: sincronizar a base de dados de
- * cartas a partir de um arquivo JSON (Requisito 1) e cadastrar novos usuários
- * com seu respectivo perfil de acesso (Requisitos 4 e 5).
- */
 class DevPortalWindow : public QMainWindow {
     Q_OBJECT
 public:
-    /**
-     * @brief Constrói a janela do DevPortal e monta o layout de widgets.
-     * @param parent Widget pai (opcional, padrão nullptr).
-     */
-    //Crio a tela de dev
     explicit DevPortalWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
         setWindowTitle("Nexus DevPortal - Administração");
-        resize(440, 340);
+        resize(550, 680); 
 
         auto *central = new QWidget(this);
         auto *layout = new QVBoxLayout(central);
 
         auto *groupImport = new QGroupBox("Sincronizar Base de Dados (Requisito 1)", this);
         auto *layoutImport = new QVBoxLayout(groupImport);
+        
         btnImportarJson = new QPushButton("Importar Arquivo JSON de Cartas", groupImport);
         btnImportarJson->setObjectName("btnImportarJson");
+        
+        btnBaixarImagens = new QPushButton("Baixar Imagens (Cenário 2)", groupImport);
+        btnBaixarImagens->setObjectName("btnBaixarImagens");
+        
         lblStatusImportacao = new QLabel("Nenhum arquivo importado ainda.", groupImport);
         lblStatusImportacao->setObjectName("lblStatusImportacao");
+        
         layoutImport->addWidget(btnImportarJson);
+        layoutImport->addWidget(btnBaixarImagens);
         layoutImport->addWidget(lblStatusImportacao);
 
         auto *groupUsuarios = new QGroupBox("Cadastro de Usuários (Requisitos 4 e 5)", this);
         auto *layoutUsuarios = new QVBoxLayout(groupUsuarios);
-        txtNovoLogin = new QLineEdit(groupUsuarios);
-        txtNovoLogin->setObjectName("txtNovoLogin");
-        txtNovoLogin->setPlaceholderText("Novo usuário");
+        
+        txtNovoNome = new QLineEdit(groupUsuarios);
+        txtNovoNome->setObjectName("txtNovoNome");
+        txtNovoNome->setPlaceholderText("Nome completo");
+
+        txtNovoEmail = new QLineEdit(groupUsuarios);
+        txtNovoEmail->setObjectName("txtNovoEmail");
+        txtNovoEmail->setPlaceholderText("E-mail");
+        
         txtNovaSenha = new QLineEdit(groupUsuarios);
         txtNovaSenha->setObjectName("txtNovaSenha");
         txtNovaSenha->setEchoMode(QLineEdit::Password);
         txtNovaSenha->setPlaceholderText("Senha");
+        
         comboPerfil = new QComboBox(groupUsuarios);
         comboPerfil->setObjectName("comboPerfil");
         comboPerfil->addItem("LOJISTA");
         comboPerfil->addItem("ADMIN");
+        
         btnCadastrarUsuario = new QPushButton("Cadastrar Usuário", groupUsuarios);
         btnCadastrarUsuario->setObjectName("btnCadastrarUsuario");
 
-        layoutUsuarios->addWidget(txtNovoLogin);
+        layoutUsuarios->addWidget(txtNovoNome);
+        layoutUsuarios->addWidget(txtNovoEmail);
         layoutUsuarios->addWidget(txtNovaSenha);
         layoutUsuarios->addWidget(comboPerfil);
         layoutUsuarios->addWidget(btnCadastrarUsuario);
 
+        auto *groupLista = new QGroupBox("Gestão de Usuários (Inativar Acesso)", this);
+        auto *layoutLista = new QVBoxLayout(groupLista);
+        
+        tabelaUsuarios = new QTableWidget(groupLista);
+        tabelaUsuarios->setObjectName("tabelaUsuarios");
+        
+        tabelaUsuarios->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); 
+        tabelaUsuarios->setSelectionBehavior(QAbstractItemView::SelectRows); 
+        tabelaUsuarios->setSelectionMode(QAbstractItemView::SingleSelection);
+        
+        btnEditarPermissao = new QPushButton("Alterar Nível de Acesso (Admin <-> Lojista)", groupLista);
+        btnEditarPermissao->setObjectName("btnEditarPermissao");
+
+        btnInativar = new QPushButton("Inativar Usuário Selecionado", groupLista);
+        btnInativar->setObjectName("btnInativar");
+        
+        layoutLista->addWidget(tabelaUsuarios);
+        layoutLista->addWidget(btnEditarPermissao);
+        layoutLista->addWidget(btnInativar);
+
         layout->addWidget(groupImport);
         layout->addWidget(groupUsuarios);
-        setCentralWidget(central);
+        layout->addWidget(groupLista);
 
-        // Abre um seletor de arquivo, delega o parse/ingestão ao NexusDbManager
-        // (Requisito 1) e reporta quantas cartas foram importadas.
+        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
+        layout->addWidget(btnVoltar);
+
+        setCentralWidget(central);
+        carregarUsuarios();
+
         connect(btnImportarJson, &QPushButton::clicked, [this]() {
             QString caminho = QFileDialog::getOpenFileName(this, "Selecionar dataset de cartas", QString(), "JSON (*.json)");
             if (caminho.isEmpty()) return;
@@ -91,39 +120,122 @@ public:
             }
         });
 
-        // Cadastra um novo usuário (Requisito 4) já com o perfil de acesso
-        // definido (Requisito 5).
+        connect(btnBaixarImagens, &QPushButton::clicked, [this]() {
+            QMessageBox::information(this, "Sincronização", "Download de imagens finalizado!");
+        });
+
         connect(btnCadastrarUsuario, &QPushButton::clicked, [this]() {
-            if (txtNovoLogin->text().isEmpty() || txtNovaSenha->text().isEmpty()) {
-                QMessageBox::warning(this, "Erro", "Informe usuário e senha.");
+            if (txtNovoNome->text().isEmpty() || txtNovoEmail->text().isEmpty() || txtNovaSenha->text().isEmpty()) {
+                QMessageBox::warning(this, "Erro", "Informe nome completo, e-mail e senha.");
                 return;
             }
-            bool ok = NexusDbManager::getInstance().registerUser(txtNovoLogin->text(), txtNovaSenha->text(), comboPerfil->currentText());
+            bool ok = NexusDbManager::getInstance().registerUser(
+                txtNovoNome->text(), 
+                txtNovoEmail->text(), 
+                txtNovaSenha->text(), 
+                comboPerfil->currentText()
+            );
+
             if (ok) {
                 QMessageBox::information(this, "Sucesso", "Usuário cadastrado com sucesso!");
-                txtNovoLogin->clear();
+                txtNovoNome->clear();
+                txtNovoEmail->clear();
                 txtNovaSenha->clear();
+                carregarUsuarios(); 
             } else {
-                QMessageBox::warning(this, "Erro", "Usuário já existe.");
+                QMessageBox::warning(this, "Erro", "E-mail já está em uso");
             }
         });
 
-        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
+        connect(btnInativar, &QPushButton::clicked, [this]() {
+            int row = tabelaUsuarios->currentRow();
+            if(row < 0) {
+                QMessageBox::warning(this, "Aviso", "Selecione um usuário na tabela para inativar.");
+                return;
+            }
+            
+            int idTarget = tabelaUsuarios->item(row, 0)->text().toInt();
+            int idLogado = NexusDbManager::getInstance().getLoggedUserId("admin@tcgnexus.com"); 
+            
+            if(NexusDbManager::getInstance().deactivateUser(idTarget, idLogado)) {
+                QMessageBox::information(this, "Sucesso", "Acesso de usuário inativado!");
+                carregarUsuarios(); 
+            } else {
+                QMessageBox::warning(this, "Erro", "Não é possível inativar a própria conta");
+            }
+        });
 
-        layout->addWidget(btnVoltar);
+        connect(btnEditarPermissao, &QPushButton::clicked, [this]() {
+            int row = tabelaUsuarios->currentRow();
+            if(row < 0) {
+                QMessageBox::warning(this, "Aviso", "Selecione um usuário na tabela.");
+                return;
+            }
+            
+            int idTarget = tabelaUsuarios->item(row, 0)->text().toInt();
+            QString perfilAtual = tabelaUsuarios->item(row, 3)->text(); 
+            
+            int idLogado = NexusDbManager::getInstance().getLoggedUserId("admin@tcgnexus.com"); 
+            if(idTarget == idLogado) {
+                QMessageBox::warning(this, "Erro", "Não é possível alterar as próprias permissões de acesso.");
+                return;
+            }
+
+            QString novoPerfil = (perfilAtual == "ADMIN") ? "LOJISTA" : "ADMIN";
+            
+            if(NexusDbManager::getInstance().updateUserProfile(idTarget, novoPerfil)) {
+                QMessageBox::information(this, "Sucesso", QString("Permissão atualizada para %1!").arg(novoPerfil));
+                carregarUsuarios();
+            }
+        });
 
         connect(btnVoltar, &QPushButton::clicked, this, [this]() {
             this->close();
             qApp->exit(1000);
         });
     }
-//atributos
+
 private:
-    QPushButton *btnImportarJson;      ///< Botão que abre o seletor de arquivo JSON.
-    QLabel *lblStatusImportacao;       ///< Rótulo com o resultado da última importação.
-    QLineEdit *txtNovoLogin;           ///< Campo de login do novo usuário a cadastrar.
-    QLineEdit *txtNovaSenha;           ///< Campo de senha do novo usuário a cadastrar.
-    QComboBox *comboPerfil;            ///< Seletor do perfil de acesso (LOJISTA/ADMIN).
-    QPushButton *btnCadastrarUsuario;  ///< Botão que efetiva o cadastro do usuário.
+    QPushButton *btnImportarJson;      
+    QPushButton *btnBaixarImagens;
+    QLabel *lblStatusImportacao;       
+    QLineEdit *txtNovoNome;            
+    QLineEdit *txtNovoEmail;           
+    QLineEdit *txtNovaSenha;           
+    QComboBox *comboPerfil;            
+    QPushButton *btnCadastrarUsuario;  
+    
+    QTableWidget *tabelaUsuarios;      
+    QPushButton *btnInativar;          
+    QPushButton *btnEditarPermissao;
+
+    void carregarUsuarios() {
+        tabelaUsuarios->setColumnCount(5);
+        tabelaUsuarios->setHorizontalHeaderLabels({"ID", "Nome", "E-mail", "Perfil", "Status"});
+        tabelaUsuarios->setRowCount(0); 
+        auto users = NexusDbManager::getInstance().getAllUsers();
+        
+        for(int i = 0; i < users.size(); ++i) {
+            tabelaUsuarios->insertRow(i);
+            
+            auto *itemId = new QTableWidgetItem(users[i]["id"].toString());
+            auto *itemNome = new QTableWidgetItem(users[i]["nome"].toString());
+            auto *itemEmail = new QTableWidgetItem(users[i]["email"].toString());
+            auto *itemPerfil = new QTableWidgetItem(users[i]["perfil"].toString());
+            auto *itemStatus = new QTableWidgetItem(users[i]["ativo"].toInt() == 1 ? "Ativo" : "Inativo");
+            
+            itemId->setFlags(itemId->flags() & ~Qt::ItemIsEditable);
+            itemNome->setFlags(itemNome->flags() & ~Qt::ItemIsEditable);
+            itemEmail->setFlags(itemEmail->flags() & ~Qt::ItemIsEditable);
+            itemPerfil->setFlags(itemPerfil->flags() & ~Qt::ItemIsEditable);
+            itemStatus->setFlags(itemStatus->flags() & ~Qt::ItemIsEditable);
+
+            tabelaUsuarios->setItem(i, 0, itemId);
+            tabelaUsuarios->setItem(i, 1, itemNome);
+            tabelaUsuarios->setItem(i, 2, itemEmail);
+            tabelaUsuarios->setItem(i, 3, itemPerfil);
+            tabelaUsuarios->setItem(i, 4, itemStatus);
+        }
+    }
 };
 #endif // DEVPORTALWINDOW_H

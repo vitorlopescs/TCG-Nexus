@@ -8,7 +8,9 @@ SOURCES += \
 HEADERS += \
     logindialog.h \
     devportalwindow.h \
-    storedashwindow.h
+    storedashwindow.h \
+    recoverdialog.h \
+    registerdialog.h
 
 INCLUDEPATH += ../TCGCore
 LIBS += -L../TCGCore -lTCGCore
