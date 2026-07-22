@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['getinstance_0',['getInstance',['../classNexusDbManager.html#a2720626125307ee73c3500cca6a7d3aa',1,'NexusDbManager']]],
-  ['getperfil_1',['getPerfil',['../classLoginDialog.html#a1fa6bf5534193a194b379bc59bec26fb',1,'LoginDialog']]]
+  ['deactivateuser_0',['deactivateUser',['../classNexusDbManager.html#a9d202908b3d297681ef1c1fc15360eb7',1,'NexusDbManager']]],
+  ['devportalwindow_1',['DevPortalWindow',['../classDevPortalWindow.html#ab6b5952d480920e9054517e02e969259',1,'DevPortalWindow']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['devportalwindow_0',['DevPortalWindow',['../classDevPortalWindow.html#ab6b5952d480920e9054517e02e969259',1,'DevPortalWindow']]]
+  ['carregarusuarios_0',['carregarUsuarios',['../classDevPortalWindow.html#a483e20b699013486e4fcd6951fa1ee1e',1,'DevPortalWindow']]],
+  ['checkemailexists_1',['checkEmailExists',['../classNexusDbManager.html#a368f347d1dc6dfb98058584c300e2601',1,'NexusDbManager']]]
 ];

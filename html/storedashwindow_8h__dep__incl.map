@@ -1,7 +1,11 @@
 <map id="TCGGUI/storedashwindow.h" name="TCGGUI/storedashwindow.h">
-<area shape="rect" id="Node000001" title="Janela do módulo StoreDash: busca de cartas por atributo e gestão de estoque local." alt="" coords="70,5,271,31"/>
-<area shape="rect" id="Node000002" href="$main_8cpp.html" title="Ponto de entrada do executável TCGGUI." alt="" coords="5,79,141,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,41,91,81,88,76,142,37"/>
-<area shape="rect" id="Node000003" href="$test__storedash_8cpp.html" title="Teste automatizado de GUI (QTest) do módulo StoreDash." alt="" coords="165,79,373,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,36,255,76,252,81,196,41"/>
+<area shape="rect" id="Node000001" title="Janela do módulo StoreDash: busca de cartas por atributo e gestão de estoque local." alt="" coords="281,5,482,31"/>
+<area shape="rect" id="Node000002" href="$TCGGUI_2main_8cpp.html" title="Ponto de entrada do executável TCGGUI." alt="" coords="5,93,141,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="322,36,154,81,108,96,106,91,153,76,321,31"/>
+<area shape="rect" id="Node000003" href="$test__storedash_8cpp.html" title="Teste automatizado de GUI (QTest) do módulo StoreDash." alt="" coords="165,93,373,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="357,41,286,95,283,91,353,37"/>
+<area shape="rect" id="Node000004" href="$TCGGUI_2moc__storedashwindow_8cpp.html" title=" " alt="" coords="397,79,592,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="409,37,462,77,459,81,406,41"/>
+<area shape="rect" id="Node000005" href="$TCGTests_2moc__storedashwindow_8cpp.html" title=" " alt="" coords="617,79,818,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="440,31,617,76,616,82,439,37"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jsonvaluetostring_0',['jsonValueToString',['../classNexusDbManager.html#a07a4bc0d1b9e368ee7fbb2dafaa76e22',1,'NexusDbManager']]]
+  ['hashpasswordwithsalt_0',['hashPasswordWithSalt',['../classNexusDbManager.html#a075a2afd071c012d664ec2ba3ef91dff',1,'NexusDbManager']]]
 ];

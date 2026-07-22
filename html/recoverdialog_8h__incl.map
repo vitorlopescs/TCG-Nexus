@@ -1,0 +1,39 @@
+<map id="TCGGUI/recoverdialog.h" name="TCGGUI/recoverdialog.h">
+<area shape="rect" id="Node000001" title="Tela para redefinição de senha (Requisito BDD)." alt="" coords="311,5,489,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,80,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="338,33,94,81,93,76,337,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="105,79,189,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="360,33,202,77,200,72,359,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="213,79,320,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="380,33,302,74,299,70,377,28"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="345,79,455,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="403,31,403,65,397,65,397,31"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="480,79,547,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="420,28,485,69,482,74,417,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="571,79,685,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="437,28,579,72,577,77,436,33"/>
+<area shape="rect" id="Node000008" href="$nexusdbmanager_8h.html" title="Gerenciador de persistência de dados em conformidade com o RNF 6.7 (macOS/Multiplataforma)." alt="" coords="709,79,856,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="462,28,708,73,707,79,461,33"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="224,152,339,177"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="710,105,353,154,352,149,709,100"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="363,152,453,177"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="721,107,468,154,467,149,720,101"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="477,152,560,177"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="741,107,574,151,573,146,740,101"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="585,152,655,177"/>
+<area shape="poly" id="edge11_Node000008_Node000012" title=" " alt="" coords="758,106,660,149,658,144,755,102"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="679,152,777,177"/>
+<area shape="poly" id="edge12_Node000008_Node000013" title=" " alt="" coords="776,106,747,143,743,140,772,103"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="801,152,874,177"/>
+<area shape="poly" id="edge13_Node000008_Node000014" title=" " alt="" coords="794,103,822,140,818,143,790,106"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="899,152,1005,177"/>
+<area shape="poly" id="edge14_Node000008_Node000015" title=" " alt="" coords="811,102,913,144,911,149,809,106"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1030,152,1125,177"/>
+<area shape="poly" id="edge15_Node000008_Node000016" title=" " alt="" coords="831,101,1017,146,1016,151,829,107"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1149,152,1224,177"/>
+<area shape="poly" id="edge16_Node000008_Node000017" title=" " alt="" coords="857,101,1136,149,1135,154,856,106"/>
+<area shape="rect" id="Node000018" href="$tcgcore__global_8h.html" title="Macros de exportação/importação de símbolos para a biblioteca TCGCore." alt="" coords="1249,152,1378,177"/>
+<area shape="poly" id="edge17_Node000008_Node000018" title=" " alt="" coords="856,99,1235,149,1235,155,856,105"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="1248,225,1379,251"/>
+<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="1316,178,1316,212,1311,212,1311,178"/>
+</map>

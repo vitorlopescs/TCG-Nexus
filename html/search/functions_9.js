@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../classNexusDbManager.html#a40a6b37928638549a13d9cb98f38ccf7',1,'NexusDbManager']]]
+  ['nexusdbmanager_0',['NexusDbManager',['../classNexusDbManager.html#a527c42cba0917956729fde5dbe117e8c',1,'NexusDbManager::NexusDbManager()'],['../classNexusDbManager.html#ac0c4c81253aab9728c1fd3b05ba99257',1,'NexusDbManager::NexusDbManager(const NexusDbManager &amp;)=delete']]]
 ];

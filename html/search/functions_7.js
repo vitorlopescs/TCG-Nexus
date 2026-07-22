@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]]
+  ['logindialog_0',['LoginDialog',['../classLoginDialog.html#a7456f32deb63b8d3fb66b76f1e97977e',1,'LoginDialog']]]
 ];

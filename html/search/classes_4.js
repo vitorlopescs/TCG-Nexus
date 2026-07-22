@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['testestoredash_0',['TesteStoreDash',['../classTesteStoreDash.html',1,'']]]
+  ['recoverdialog_0',['RecoverDialog',['../classRecoverDialog.html',1,'']]],
+  ['registerdialog_1',['RegisterDialog',['../classRegisterDialog.html',1,'']]]
 ];

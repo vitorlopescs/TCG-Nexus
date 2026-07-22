@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div><!--header-->
 <div class="contents">
 
-<p>Implementa o Padrão de Projeto Singleton para gerenciar a camada de Persistência do TCG Nexus.  
+<p>Singleton responsável pelas regras de dados e segurança do TCG Nexus.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="nexusdbmanager_8h_source.html">nexusdbmanager.h</a>&gt;</code></p>
@@ -117,53 +117,40 @@ document.addEventListener('DOMContentLoaded', () => {
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac8037af2469da04363cda8fb9dd157db" id="r_ac8037af2469da04363cda8fb9dd157db"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac8037af2469da04363cda8fb9dd157db">initDatabase</a> ()</td></tr>
-<tr class="memdesc:ac8037af2469da04363cda8fb9dd157db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa o banco SQLite em memória e cria as tabelas do sistema (usuarios, cartas, estoque), semeando um usuário "admin"/"123" para viabilizar o primeiro acesso e o cadastro dos demais usuários.  <br /></td></tr>
 <tr class="memitem:a774c23b25e34865b2fbdf5aa034275f9" id="r_a774c23b25e34865b2fbdf5aa034275f9"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a774c23b25e34865b2fbdf5aa034275f9">ingestCardsFromJsonFile</a> (const QString &amp;filePath)</td></tr>
-<tr class="memdesc:a774c23b25e34865b2fbdf5aa034275f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê um arquivo em disco e delega a ingestão para <a class="el" href="#a6eaedc295df597a44b891a63b6d09806" title="Realiza o parse de um JSON de cartas (formato Pokémon TCG) e popula a tabela &quot;cartas&quot; (Requisito 1)....">ingestCardsFromJson()</a>.  <br /></td></tr>
 <tr class="memitem:a6eaedc295df597a44b891a63b6d09806" id="r_a6eaedc295df597a44b891a63b6d09806"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a6eaedc295df597a44b891a63b6d09806">ingestCardsFromJson</a> (const QByteArray &amp;jsonData)</td></tr>
-<tr class="memdesc:a6eaedc295df597a44b891a63b6d09806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Realiza o parse de um JSON de cartas (formato Pokémon TCG) e popula a tabela "cartas" (Requisito 1). Aceita tanto um array raiz quanto um objeto com a chave "data" (formato usado pela API oficial do Pokémon TCG).  <br /></td></tr>
-<tr class="memitem:a34b7c4f0cecca095ffd20f0bae12439d" id="r_a34b7c4f0cecca095ffd20f0bae12439d"><td class="memItemLeft">QString&#160;</td><td class="memItemRight"><a class="el" href="#a34b7c4f0cecca095ffd20f0bae12439d">authenticateUser</a> (const QString &amp;login, const QString &amp;senha)</td></tr>
-<tr class="memdesc:a34b7c4f0cecca095ffd20f0bae12439d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valida as credenciais de um usuário comparando o hash da senha informada com o hash armazenado no SQLite (Requisito 3).  <br /></td></tr>
-<tr class="memitem:ac0b8a0d860e015de0fc65c6d21cc31c2" id="r_ac0b8a0d860e015de0fc65c6d21cc31c2"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac0b8a0d860e015de0fc65c6d21cc31c2">registerUser</a> (const QString &amp;login, const QString &amp;senha, const QString &amp;perfil)</td></tr>
-<tr class="memdesc:ac0b8a0d860e015de0fc65c6d21cc31c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cadastra um novo usuário no sistema, armazenando a senha já hasheada (Requisito 4).  <br /></td></tr>
+<tr class="memitem:a730d8a5fea3fc92ac2a42064f744dec1" id="r_a730d8a5fea3fc92ac2a42064f744dec1"><td class="memItemLeft">QString&#160;</td><td class="memItemRight"><a class="el" href="#a730d8a5fea3fc92ac2a42064f744dec1">authenticateUser</a> (const QString &amp;email, const QString &amp;senha)</td></tr>
+<tr class="memitem:ab987c5ce22c2b815cad957087024da74" id="r_ab987c5ce22c2b815cad957087024da74"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab987c5ce22c2b815cad957087024da74">registerUser</a> (const QString &amp;nome, const QString &amp;email, const QString &amp;senha, const QString &amp;perfil)</td></tr>
 <tr class="memitem:ab89a82c9131a56f71ced87914caf4af9" id="r_ab89a82c9131a56f71ced87914caf4af9"><td class="memItemLeft">QVector&lt; QVariantMap &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab89a82c9131a56f71ced87914caf4af9">searchCardsByAttribute</a> (const QString &amp;atributo, const QString &amp;valor)</td></tr>
-<tr class="memdesc:ab89a82c9131a56f71ced87914caf4af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca cartas no catálogo por um atributo técnico específico (Requisito 2).  <br /></td></tr>
 <tr class="memitem:a94c97514b8d5f1cc48f9315c6ad543df" id="r_a94c97514b8d5f1cc48f9315c6ad543df"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a94c97514b8d5f1cc48f9315c6ad543df">addCardToStock</a> (const QString &amp;cardId, int quantidade, double preco)</td></tr>
-<tr class="memdesc:a94c97514b8d5f1cc48f9315c6ad543df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adiciona (ou atualiza) uma carta no estoque local do lojista (Requisito 2).  <br /></td></tr>
+<tr class="memitem:a914bd5821b9b60a3847300438da08e8a" id="r_a914bd5821b9b60a3847300438da08e8a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a914bd5821b9b60a3847300438da08e8a">updateCardPrice</a> (const QString &amp;cardId, double novoPreco)</td></tr>
 <tr class="memitem:aeba5bc81e0911c9cb2f119e5f1f0b4ad" id="r_aeba5bc81e0911c9cb2f119e5f1f0b4ad"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#aeba5bc81e0911c9cb2f119e5f1f0b4ad">stockItemCount</a> ()</td></tr>
-<tr class="memdesc:aeba5bc81e0911c9cb2f119e5f1f0b4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna a quantidade de itens distintos cadastrados no estoque local.  <br /></td></tr>
+<tr class="memitem:a368f347d1dc6dfb98058584c300e2601" id="r_a368f347d1dc6dfb98058584c300e2601"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a368f347d1dc6dfb98058584c300e2601">checkEmailExists</a> (const QString &amp;email)</td></tr>
+<tr class="memitem:a9d202908b3d297681ef1c1fc15360eb7" id="r_a9d202908b3d297681ef1c1fc15360eb7"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9d202908b3d297681ef1c1fc15360eb7">deactivateUser</a> (int idTarget, int idLogado)</td></tr>
+<tr class="memitem:ac6e088f95b01a363ff361d7fb52fce74" id="r_ac6e088f95b01a363ff361d7fb52fce74"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac6e088f95b01a363ff361d7fb52fce74">updateUserProfile</a> (int idTarget, const QString &amp;novoPerfil)</td></tr>
+<tr class="memitem:a04b4fbac8bafdaa500c78a98d1df10b8" id="r_a04b4fbac8bafdaa500c78a98d1df10b8"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a04b4fbac8bafdaa500c78a98d1df10b8">getLoggedUserId</a> (const QString &amp;email)</td></tr>
+<tr class="memitem:ada12a717cc6995daa91dce0c9e81d451" id="r_ada12a717cc6995daa91dce0c9e81d451"><td class="memItemLeft">QVector&lt; QVariantMap &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ada12a717cc6995daa91dce0c9e81d451">getAllUsers</a> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2720626125307ee73c3500cca6a7d3aa" id="r_a2720626125307ee73c3500cca6a7d3aa"><td class="memItemLeft">static <a class="el" href="classNexusDbManager.html">NexusDbManager</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2720626125307ee73c3500cca6a7d3aa">getInstance</a> ()</td></tr>
-<tr class="memdesc:a2720626125307ee73c3500cca6a7d3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna a instância única do gerenciador de banco de dados (Singleton).  <br /></td></tr>
-<tr class="memitem:a1533c853ecf5588066d70502a29892f9" id="r_a1533c853ecf5588066d70502a29892f9"><td class="memItemLeft">static QString&#160;</td><td class="memItemRight"><a class="el" href="#a1533c853ecf5588066d70502a29892f9">hashPassword</a> (const QString &amp;senha)</td></tr>
-<tr class="memdesc:a1533c853ecf5588066d70502a29892f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gera o hash SHA-256 de uma senha em texto puro.  <br /></td></tr>
+<tr class="memdesc:a2720626125307ee73c3500cca6a7d3aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna a instância única do gerenciador (Padrão Singleton).  <br /></td></tr>
+<tr class="memitem:a541182d1f49aa0e525294de41ae01d9e" id="r_a541182d1f49aa0e525294de41ae01d9e"><td class="memItemLeft">static QString&#160;</td><td class="memItemRight"><a class="el" href="#a541182d1f49aa0e525294de41ae01d9e">generateSalt</a> ()</td></tr>
+<tr class="memitem:a075a2afd071c012d664ec2ba3ef91dff" id="r_a075a2afd071c012d664ec2ba3ef91dff"><td class="memItemLeft">static QString&#160;</td><td class="memItemRight"><a class="el" href="#a075a2afd071c012d664ec2ba3ef91dff">hashPasswordWithSalt</a> (const QString &amp;senha, const QString &amp;salt)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a527c42cba0917956729fde5dbe117e8c" id="r_a527c42cba0917956729fde5dbe117e8c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a527c42cba0917956729fde5dbe117e8c">NexusDbManager</a> ()</td></tr>
-<tr class="memdesc:a527c42cba0917956729fde5dbe117e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construtor privado (Regra do Singleton): impede instanciação externa.  <br /></td></tr>
 <tr class="memitem:ac0c4c81253aab9728c1fd3b05ba99257" id="r_ac0c4c81253aab9728c1fd3b05ba99257"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac0c4c81253aab9728c1fd3b05ba99257">NexusDbManager</a> (const <a class="el" href="classNexusDbManager.html">NexusDbManager</a> &amp;)=delete</td></tr>
-<tr class="memdesc:ac0c4c81253aab9728c1fd3b05ba99257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construtor de cópia deletado: impede múltiplas instâncias.  <br /></td></tr>
 <tr class="memitem:a40a6b37928638549a13d9cb98f38ccf7" id="r_a40a6b37928638549a13d9cb98f38ccf7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a40a6b37928638549a13d9cb98f38ccf7">operator=</a> (const <a class="el" href="classNexusDbManager.html">NexusDbManager</a> &amp;)=delete</td></tr>
-<tr class="memdesc:a40a6b37928638549a13d9cb98f38ccf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operador de atribuição deletado: impede múltiplas instâncias.  <br /></td></tr>
 <tr class="memitem:a07a4bc0d1b9e368ee7fbb2dafaa76e22" id="r_a07a4bc0d1b9e368ee7fbb2dafaa76e22"><td class="memItemLeft">QString&#160;</td><td class="memItemRight"><a class="el" href="#a07a4bc0d1b9e368ee7fbb2dafaa76e22">jsonValueToString</a> (const QJsonValue &amp;value) const</td></tr>
-<tr class="memdesc:a07a4bc0d1b9e368ee7fbb2dafaa76e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converte um QJsonValue (string simples ou array de strings/objetos) em uma única QString legível, unindo múltiplos valores com "; ". Usado para normalizar campos como "attacks", "weaknesses" e "evolvesTo", que no dataset oficial do Pokémon TCG podem vir como arrays.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a95266eca59a5259c75cb1d6008c58c97" id="r_a95266eca59a5259c75cb1d6008c58c97"><td class="memItemLeft">QSqlDatabase&#160;</td><td class="memItemRight"><a class="el" href="#a95266eca59a5259c75cb1d6008c58c97">db</a></td></tr>
-<tr class="memdesc:a95266eca59a5259c75cb1d6008c58c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conexão ativa com o banco de dados SQLite em memória.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementa o Padrão de Projeto Singleton para gerenciar a camada de Persistência do TCG Nexus. </p>
-<p>Consolida, em um único ponto de acesso ao SQLite, as responsabilidades de dados previstas na Especificação de Requisitos (DER v3.0):</p><ul>
-<li>Ingestão de metadados oficiais de cartas via JSON (Requisito 1 - módulo DevPortal).</li>
-<li>Cadastro e autenticação de usuários com senha hasheada (Requisitos 3 e 4).</li>
-<li>Consulta ao catálogo por atributo técnico e gestão de estoque local (Requisito 2 - módulo StoreDash).</li>
-</ul>
-<p>Por ser exportada de uma DLL (TCGCORE_EXPORT), pode ser consumida por qualquer executável cliente (ex: TCGGUI) sem duplicar a lógica de acesso a dados. </p>
+<div class="textblock"><p>Singleton responsável pelas regras de dados e segurança do TCG Nexus. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a527c42cba0917956729fde5dbe117e8c" name="a527c42cba0917956729fde5dbe117e8c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a527c42cba0917956729fde5dbe117e8c">&#9670;&#160;</a></span>NexusDbManager() <span class="overload">[1/2]</span></h2>
@@ -187,8 +174,6 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construtor privado (Regra do Singleton): impede instanciação externa. </p>
 
 </div>
 </div>
@@ -214,8 +199,6 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construtor de cópia deletado: impede múltiplas instâncias. </p>
 
 </div>
 </div>
@@ -244,21 +227,10 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adiciona (ou atualiza) uma carta no estoque local do lojista (Requisito 2). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cardId</td><td>Identificador da carta (deve existir na tabela "cartas"). </td></tr>
-    <tr><td class="paramname">quantidade</td><td>Unidades disponíveis em estoque. </td></tr>
-    <tr><td class="paramname">preco</td><td>Preço de venda definido pelo lojista. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>bool true se a operação foi persistida com sucesso. </dd></dl>
-
 </div>
 </div>
-<a id="a34b7c4f0cecca095ffd20f0bae12439d" name="a34b7c4f0cecca095ffd20f0bae12439d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34b7c4f0cecca095ffd20f0bae12439d">&#9670;&#160;</a></span>authenticateUser()</h2>
+<a id="a730d8a5fea3fc92ac2a42064f744dec1" name="a730d8a5fea3fc92ac2a42064f744dec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a730d8a5fea3fc92ac2a42064f744dec1">&#9670;&#160;</a></span>authenticateUser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +238,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">QString NexusDbManager::authenticateUser </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>login</em></span>, </td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>email</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -276,15 +248,85 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Valida as credenciais de um usuário comparando o hash da senha informada com o hash armazenado no SQLite (Requisito 3). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">login</td><td>Nome de usuário informado na tela de login. </td></tr>
-    <tr><td class="paramname">senha</td><td>Senha em texto puro informada na tela de login. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>QString O perfil do usuário ("ADMIN" ou "LOJISTA") em caso de sucesso; string vazia caso as credenciais sejam inválidas. </dd></dl>
+</div>
+</div>
+<a id="a368f347d1dc6dfb98058584c300e2601" name="a368f347d1dc6dfb98058584c300e2601"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a368f347d1dc6dfb98058584c300e2601">&#9670;&#160;</a></span>checkEmailExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool NexusDbManager::checkEmailExists </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>email</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9d202908b3d297681ef1c1fc15360eb7" name="a9d202908b3d297681ef1c1fc15360eb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d202908b3d297681ef1c1fc15360eb7">&#9670;&#160;</a></span>deactivateUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool NexusDbManager::deactivateUser </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>idTarget</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>idLogado</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a541182d1f49aa0e525294de41ae01d9e" name="a541182d1f49aa0e525294de41ae01d9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a541182d1f49aa0e525294de41ae01d9e">&#9670;&#160;</a></span>generateSalt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString NexusDbManager::generateSalt </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada12a717cc6995daa91dce0c9e81d451" name="ada12a717cc6995daa91dce0c9e81d451"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada12a717cc6995daa91dce0c9e81d451">&#9670;&#160;</a></span>getAllUsers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVector&lt; QVariantMap &gt; NexusDbManager::getAllUsers </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -311,13 +353,29 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Retorna a instância única do gerenciador de banco de dados (Singleton). </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classNexusDbManager.html" title="Implementa o Padrão de Projeto Singleton para gerenciar a camada de Persistência do TCG Nexus.">NexusDbManager</a>&amp; Referência para a instância estática única. </dd></dl>
+<p>Retorna a instância única do gerenciador (Padrão Singleton). </p>
 
 </div>
 </div>
-<a id="a1533c853ecf5588066d70502a29892f9" name="a1533c853ecf5588066d70502a29892f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1533c853ecf5588066d70502a29892f9">&#9670;&#160;</a></span>hashPassword()</h2>
+<a id="a04b4fbac8bafdaa500c78a98d1df10b8" name="a04b4fbac8bafdaa500c78a98d1df10b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04b4fbac8bafdaa500c78a98d1df10b8">&#9670;&#160;</a></span>getLoggedUserId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int NexusDbManager::getLoggedUserId </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>email</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a075a2afd071c012d664ec2ba3ef91dff" name="a075a2afd071c012d664ec2ba3ef91dff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a075a2afd071c012d664ec2ba3ef91dff">&#9670;&#160;</a></span>hashPasswordWithSalt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,10 +384,14 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">QString NexusDbManager::hashPassword </td>
+          <td class="memname">QString NexusDbManager::hashPasswordWithSalt </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>senha</em></span></td><td>)</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>senha</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>salt</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -338,16 +400,6 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gera o hash SHA-256 de uma senha em texto puro. </p>
-<p>Escolha de MVP: SHA-256 via QCryptographicHash (nativo do Qt, sem dependências externas pesadas). O RNF 6.7 do DER recomenda bcrypt/Argon2 para produção; fica registrado aqui como evolução pós-MVP.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">senha</td><td>Senha em texto puro. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>QString Hash hexadecimal da senha. </dd></dl>
 
 </div>
 </div>
@@ -366,15 +418,6 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Realiza o parse de um JSON de cartas (formato Pokémon TCG) e popula a tabela "cartas" (Requisito 1). Aceita tanto um array raiz quanto um objeto com a chave "data" (formato usado pela API oficial do Pokémon TCG). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">jsonData</td><td>Conteúdo bruto do arquivo JSON. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>int Quantidade de cartas importadas com sucesso, ou -1 se o JSON for inválido. </dd></dl>
-
 </div>
 </div>
 <a id="a774c23b25e34865b2fbdf5aa034275f9" name="a774c23b25e34865b2fbdf5aa034275f9"></a>
@@ -392,15 +435,6 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Lê um arquivo em disco e delega a ingestão para <a class="el" href="#a6eaedc295df597a44b891a63b6d09806" title="Realiza o parse de um JSON de cartas (formato Pokémon TCG) e popula a tabela &quot;cartas&quot; (Requisito 1)....">ingestCardsFromJson()</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filePath</td><td>Caminho absoluto/relativo do arquivo JSON de cartas. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>int Quantidade de cartas importadas, ou -1 em caso de falha de leitura/parse. </dd></dl>
-
 </div>
 </div>
 <a id="ac8037af2469da04363cda8fb9dd157db" name="ac8037af2469da04363cda8fb9dd157db"></a>
@@ -417,9 +451,6 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Inicializa o banco SQLite em memória e cria as tabelas do sistema (usuarios, cartas, estoque), semeando um usuário "admin"/"123" para viabilizar o primeiro acesso e o cadastro dos demais usuários. </p>
-<dl class="section return"><dt>Returns</dt><dd>bool true se o banco foi aberto e as tabelas criadas com sucesso. </dd></dl>
 
 </div>
 </div>
@@ -446,15 +477,6 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converte um QJsonValue (string simples ou array de strings/objetos) em uma única QString legível, unindo múltiplos valores com "; ". Usado para normalizar campos como "attacks", "weaknesses" e "evolvesTo", que no dataset oficial do Pokémon TCG podem vir como arrays. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>Valor JSON de origem. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>QString Representação textual normalizada (vazia se o valor for nulo). </dd></dl>
-
 </div>
 </div>
 <a id="a40a6b37928638549a13d9cb98f38ccf7" name="a40a6b37928638549a13d9cb98f38ccf7"></a>
@@ -480,12 +502,10 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Operador de atribuição deletado: impede múltiplas instâncias. </p>
-
 </div>
 </div>
-<a id="ac0b8a0d860e015de0fc65c6d21cc31c2" name="ac0b8a0d860e015de0fc65c6d21cc31c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0b8a0d860e015de0fc65c6d21cc31c2">&#9670;&#160;</a></span>registerUser()</h2>
+<a id="ab987c5ce22c2b815cad957087024da74" name="ab987c5ce22c2b815cad957087024da74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab987c5ce22c2b815cad957087024da74">&#9670;&#160;</a></span>registerUser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -493,7 +513,12 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">bool NexusDbManager::registerUser </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>login</em></span>, </td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>nome</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>email</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -507,17 +532,6 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Cadastra um novo usuário no sistema, armazenando a senha já hasheada (Requisito 4). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">login</td><td>Nome de usuário (chave única). </td></tr>
-    <tr><td class="paramname">senha</td><td>Senha em texto puro (será hasheada antes de persistir). </td></tr>
-    <tr><td class="paramname">perfil</td><td>Perfil de acesso do usuário ("ADMIN" ou "LOJISTA" - Requisito 5). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>bool true se o cadastro foi criado; false se o login já existir. </dd></dl>
 
 </div>
 </div>
@@ -540,16 +554,6 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca cartas no catálogo por um atributo técnico específico (Requisito 2). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">atributo</td><td>Nome da coluna a filtrar (name, type, supertype, rarity ou artist). </td></tr>
-    <tr><td class="paramname">valor</td><td>Valor (ou trecho) a ser buscado, com correspondência parcial (LIKE). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>QVector&lt;QVariantMap&gt; Lista de cartas encontradas, cada uma como um mapa de atributos. </dd></dl>
-
 </div>
 </div>
 <a id="aeba5bc81e0911c9cb2f119e5f1f0b4ad" name="aeba5bc81e0911c9cb2f119e5f1f0b4ad"></a>
@@ -567,8 +571,47 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Retorna a quantidade de itens distintos cadastrados no estoque local. </p>
-<dl class="section return"><dt>Returns</dt><dd>int Número de linhas da tabela "estoque". </dd></dl>
+</div>
+</div>
+<a id="a914bd5821b9b60a3847300438da08e8a" name="a914bd5821b9b60a3847300438da08e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a914bd5821b9b60a3847300438da08e8a">&#9670;&#160;</a></span>updateCardPrice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool NexusDbManager::updateCardPrice </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>cardId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>novoPreco</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac6e088f95b01a363ff361d7fb52fce74" name="ac6e088f95b01a363ff361d7fb52fce74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6e088f95b01a363ff361d7fb52fce74">&#9670;&#160;</a></span>updateUserProfile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool NexusDbManager::updateUserProfile </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>idTarget</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>novoPerfil</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -592,8 +635,6 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Conexão ativa com o banco de dados SQLite em memória. </p>
 
 </div>
 </div>

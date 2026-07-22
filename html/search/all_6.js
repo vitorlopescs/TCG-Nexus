@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['ingestcardsfromjson_0',['ingestCardsFromJson',['../classNexusDbManager.html#a6eaedc295df597a44b891a63b6d09806',1,'NexusDbManager']]],
-  ['ingestcardsfromjsonfile_1',['ingestCardsFromJsonFile',['../classNexusDbManager.html#a774c23b25e34865b2fbdf5aa034275f9',1,'NexusDbManager']]],
-  ['initdatabase_2',['initDatabase',['../classNexusDbManager.html#ac8037af2469da04363cda8fb9dd157db',1,'NexusDbManager']]],
-  ['inittestcase_3',['initTestCase',['../classTesteStoreDash.html#a3fd1c6c60bf7a08d6e3c967835cdf151',1,'TesteStoreDash']]]
+  ['generatesalt_0',['generateSalt',['../classNexusDbManager.html#a541182d1f49aa0e525294de41ae01d9e',1,'NexusDbManager']]],
+  ['geral_1',['Visão geral',['../md_README.html#autotoc_md1',1,'']]],
+  ['getallusers_2',['getAllUsers',['../classNexusDbManager.html#ada12a717cc6995daa91dce0c9e81d451',1,'NexusDbManager']]],
+  ['getinstance_3',['getInstance',['../classNexusDbManager.html#a2720626125307ee73c3500cca6a7d3aa',1,'NexusDbManager']]],
+  ['getloggeduserid_4',['getLoggedUserId',['../classNexusDbManager.html#a04b4fbac8bafdaa500c78a98d1df10b8',1,'NexusDbManager']]],
+  ['getperfil_5',['getPerfil',['../classLoginDialog.html#a1fa6bf5534193a194b379bc59bec26fb',1,'LoginDialog']]]
 ];

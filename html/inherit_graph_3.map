@@ -1,5 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,80,31"/>
-<area shape="rect" id="Node000001" href="$classTesteStoreDash.html" title="Suíte de testes de GUI (QTest) para a tela StoreDashWindow." alt="" coords="128,5,251,31"/>
-<area shape="poly" id="edge4_Node000000_Node000001" title=" " alt="" coords="94,15,128,15,128,21,94,21"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,55,80,80"/>
+<area shape="rect" id="Node000001" href="$classTesteDevPortal.html" title=" " alt="" coords="129,5,249,31"/>
+<area shape="poly" id="edge6_Node000000_Node000001" title=" " alt="" coords="92,48,150,28,152,33,94,53"/>
+<area shape="rect" id="Node000002" href="$classTesteLogin.html" title=" " alt="" coords="144,55,235,80"/>
+<area shape="poly" id="edge7_Node000000_Node000002" title=" " alt="" coords="94,65,144,65,144,70,94,70"/>
+<area shape="rect" id="Node000003" href="$classTesteStoreDash.html" title=" " alt="" coords="128,104,251,129"/>
+<area shape="poly" id="edge8_Node000000_Node000003" title=" " alt="" coords="94,82,152,101,150,106,92,87"/>
 </map>

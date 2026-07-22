@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logindialog_0',['LoginDialog',['../classLoginDialog.html#a7456f32deb63b8d3fb66b76f1e97977e',1,'LoginDialog']]]
+  ['jsonvaluetostring_0',['jsonValueToString',['../classNexusDbManager.html#a07a4bc0d1b9e368ee7fbb2dafaa76e22',1,'NexusDbManager']]]
 ];

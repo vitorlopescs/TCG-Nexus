@@ -1,0 +1,93 @@
+<map id="build/Desktop_Qt_6_11_1_Debug/TCGGUI/moc_devportalwindow.cpp" name="build/Desktop_Qt_6_11_1_Debug/TCGGUI/moc_devportalwindow.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1529,5,1723,60"/>
+<area shape="rect" id="Node000002" href="$devportalwindow_8h.html" title="Janela do módulo DevPortal: ingestão de dados oficiais, cadastro e gestão de usuários." alt="" coords="1025,108,1259,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1529,54,1220,108,1219,103,1528,49"/>
+<area shape="rect" id="Node000032" title=" " alt="" coords="1283,108,1431,133"/>
+<area shape="poly" id="edge51_Node000001_Node000032" title=" " alt="" coords="1545,63,1406,106,1405,101,1543,58"/>
+<area shape="rect" id="Node000033" title=" " alt="" coords="1455,108,1610,133"/>
+<area shape="poly" id="edge52_Node000001_Node000033" title=" " alt="" coords="1599,62,1557,100,1554,96,1596,58"/>
+<area shape="rect" id="Node000034" title=" " alt="" coords="1635,108,1807,133"/>
+<area shape="poly" id="edge53_Node000001_Node000034" title=" " alt="" coords="1657,58,1700,97,1696,101,1653,62"/>
+<area shape="rect" id="Node000035" title=" " alt="" coords="1831,108,1909,133"/>
+<area shape="poly" id="edge54_Node000001_Node000035" title=" " alt="" coords="1701,58,1826,101,1824,106,1700,63"/>
+<area shape="rect" id="Node000036" title=" " alt="" coords="1933,108,2111,133"/>
+<area shape="poly" id="edge55_Node000001_Node000036" title=" " alt="" coords="1724,52,1956,102,1955,108,1723,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,121,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1024,128,634,144,387,161,135,184,135,179,387,155,633,139,1024,122"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="145,181,251,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="1025,129,686,148,478,164,270,184,265,185,264,179,270,179,478,158,685,143,1024,124"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="337,328,443,353"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="1025,129,907,136,779,147,662,162,616,172,580,184,527,213,479,250,439,288,410,320,406,316,435,284,476,246,524,209,578,179,614,167,661,157,778,141,906,130,1024,124"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="468,328,552,353"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="1024,129,916,136,801,147,697,163,656,173,624,184,599,198,581,213,550,256,533,286,521,316,516,314,528,284,545,253,578,209,596,194,622,179,654,167,696,157,800,142,916,131,1024,124"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="1231,181,1333,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="1166,131,1248,173,1246,177,1163,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="577,328,643,353"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="1025,133,893,147,752,171,687,187,630,207,586,230,559,256,555,271,559,287,570,303,585,317,581,321,566,307,555,290,549,272,554,253,583,226,628,202,685,182,751,166,892,142,1024,127"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1076,328,1187,353"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="1149,133,1163,181,1170,231,1163,281,1148,317,1143,315,1158,279,1164,231,1158,182,1144,134"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1358,181,1454,207"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="1185,131,1351,175,1349,180,1184,136"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1479,181,1576,207"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="1205,131,1466,179,1465,184,1204,136"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="937,328,1051,353"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="1140,135,1111,200,1088,241,1061,282,1022,321,1018,317,1057,278,1084,239,1106,197,1135,132"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="1600,181,1679,207"/>
+<area shape="poly" id="edge12_Node000002_Node000013" title=" " alt="" coords="1248,131,1404,150,1587,178,1586,184,1403,156,1247,136"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="1703,181,1815,207"/>
+<area shape="poly" id="edge13_Node000002_Node000014" title=" " alt="" coords="1260,130,1457,150,1690,179,1689,184,1456,156,1259,135"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1840,181,1951,207"/>
+<area shape="poly" id="edge14_Node000002_Node000015" title=" " alt="" coords="1260,130,1272,131,1547,151,1670,161,1827,179,1826,184,1669,166,1547,156,1271,136,1259,135"/>
+<area shape="rect" id="Node000016" href="$nexusdbmanager_8h.html" title="Gerenciador de persistência de dados em conformidade com o RNF 6.7 (macOS/Multiplataforma)." alt="" coords="766,328,913,353"/>
+<area shape="poly" id="edge15_Node000002_Node000016" title=" " alt="" coords="1129,136,1048,200,936,282,872,323,869,319,932,278,1045,195,1126,131"/>
+<area shape="rect" id="Node000028" href="$logindialog_8h.html" title="Tela de autenticação do TCG Nexus (define o perfil ADMIN ou LOJISTA)." alt="" coords="738,181,845,207"/>
+<area shape="poly" id="edge27_Node000002_Node000028" title=" " alt="" coords="1086,136,859,182,858,177,1085,131"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="281,401,395,427"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="766,354,409,404,409,399,766,349"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="419,401,510,427"/>
+<area shape="poly" id="edge17_Node000016_Node000018" title=" " alt="" coords="778,356,524,404,523,398,777,351"/>
+<area shape="rect" id="Node000019" title=" " alt="" coords="534,401,617,427"/>
+<area shape="poly" id="edge18_Node000016_Node000019" title=" " alt="" coords="798,356,631,401,629,395,796,351"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="641,401,712,427"/>
+<area shape="poly" id="edge19_Node000016_Node000020" title=" " alt="" coords="814,356,717,398,715,393,812,351"/>
+<area shape="rect" id="Node000021" title=" " alt="" coords="736,401,833,427"/>
+<area shape="poly" id="edge20_Node000016_Node000021" title=" " alt="" coords="832,355,804,392,800,389,828,352"/>
+<area shape="rect" id="Node000022" title=" " alt="" coords="857,401,931,427"/>
+<area shape="poly" id="edge21_Node000016_Node000022" title=" " alt="" coords="850,352,879,389,875,392,846,355"/>
+<area shape="rect" id="Node000023" title=" " alt="" coords="955,401,1062,427"/>
+<area shape="poly" id="edge22_Node000016_Node000023" title=" " alt="" coords="868,351,969,393,967,398,866,356"/>
+<area shape="rect" id="Node000024" title=" " alt="" coords="1087,401,1181,427"/>
+<area shape="poly" id="edge23_Node000016_Node000024" title=" " alt="" coords="887,351,1074,395,1073,401,886,356"/>
+<area shape="rect" id="Node000025" title=" " alt="" coords="1206,401,1281,427"/>
+<area shape="poly" id="edge24_Node000016_Node000025" title=" " alt="" coords="913,350,1193,398,1192,404,912,356"/>
+<area shape="rect" id="Node000026" href="$tcgcore__global_8h.html" title="Macros de exportação/importação de símbolos para a biblioteca TCGCore." alt="" coords="1305,401,1435,427"/>
+<area shape="poly" id="edge25_Node000016_Node000026" title=" " alt="" coords="913,349,925,351,1292,399,1291,404,924,356,913,354"/>
+<area shape="rect" id="Node000027" title=" " alt="" coords="1305,475,1435,500"/>
+<area shape="poly" id="edge26_Node000026_Node000027" title=" " alt="" coords="1373,427,1373,461,1367,461,1367,427"/>
+<area shape="poly" id="edge30_Node000028_Node000005" title=" " alt="" coords="738,205,641,224,586,239,532,257,469,289,418,322,415,318,467,284,530,252,584,234,639,219,737,200"/>
+<area shape="poly" id="edge29_Node000028_Node000006" title=" " alt="" coords="738,200,696,205,648,215,601,232,558,257,535,284,520,316,515,313,530,282,555,253,599,227,647,210,695,199,737,194"/>
+<area shape="poly" id="edge32_Node000028_Node000008" title=" " alt="" coords="738,205,639,224,596,239,569,256,564,271,567,286,589,317,584,320,562,288,559,270,565,253,593,234,637,219,737,199"/>
+<area shape="poly" id="edge31_Node000028_Node000009" title=" " alt="" coords="830,204,893,225,964,252,1038,287,1101,319,1098,324,1036,291,962,257,892,230,828,209"/>
+<area shape="poly" id="edge33_Node000028_Node000012" title=" " alt="" coords="837,204,887,223,936,253,964,283,984,314,980,317,960,286,932,257,884,228,835,209"/>
+<area shape="poly" id="edge34_Node000028_Node000016" title=" " alt="" coords="845,204,884,222,902,236,916,253,921,274,912,293,896,310,876,323,873,319,892,305,908,290,916,273,912,256,898,240,881,227,843,209"/>
+<area shape="rect" id="Node000029" title=" " alt="" coords="667,328,742,353"/>
+<area shape="poly" id="edge28_Node000028_Node000029" title=" " alt="" coords="787,208,721,317,716,315,782,206"/>
+<area shape="rect" id="Node000030" href="$recoverdialog_8h.html" title="Tela para redefinição de senha (Requisito BDD)." alt="" coords="779,255,902,280"/>
+<area shape="poly" id="edge35_Node000028_Node000030" title=" " alt="" coords="802,205,827,242,823,245,797,209"/>
+<area shape="rect" id="Node000031" href="$registerdialog_8h.html" title="Tela de auto&#45;cadastro para novos usuários (Storyboard 1)." alt="" coords="580,255,704,280"/>
+<area shape="poly" id="edge43_Node000028_Node000031" title=" " alt="" coords="768,209,680,251,678,246,766,204"/>
+<area shape="poly" id="edge38_Node000030_Node000005" title=" " alt="" coords="780,280,457,330,456,325,779,275"/>
+<area shape="poly" id="edge37_Node000030_Node000006" title=" " alt="" coords="788,283,566,330,565,325,787,277"/>
+<area shape="poly" id="edge40_Node000030_Node000008" title=" " alt="" coords="804,283,658,328,656,322,803,277"/>
+<area shape="poly" id="edge39_Node000030_Node000009" title=" " alt="" coords="888,277,1072,322,1071,327,887,283"/>
+<area shape="poly" id="edge41_Node000030_Node000012" title=" " alt="" coords="866,278,958,320,956,325,864,282"/>
+<area shape="poly" id="edge42_Node000030_Node000016" title=" " alt="" coords="843,280,842,315,837,314,838,280"/>
+<area shape="poly" id="edge36_Node000030_Node000029" title=" " alt="" coords="820,282,740,324,738,319,818,278"/>
+<area shape="poly" id="edge46_Node000031_Node000005" title=" " alt="" coords="602,283,445,327,443,322,601,277"/>
+<area shape="poly" id="edge45_Node000031_Node000006" title=" " alt="" coords="622,282,545,324,542,319,620,278"/>
+<area shape="poly" id="edge48_Node000031_Node000008" title=" " alt="" coords="639,281,623,317,618,315,634,279"/>
+<area shape="poly" id="edge47_Node000031_Node000009" title=" " alt="" coords="705,274,1063,325,1062,331,704,280"/>
+<area shape="poly" id="edge49_Node000031_Node000012" title=" " alt="" coords="699,277,924,323,923,328,698,283"/>
+<area shape="poly" id="edge50_Node000031_Node000016" title=" " alt="" coords="675,278,795,321,793,326,673,283"/>
+<area shape="poly" id="edge44_Node000031_Node000029" title=" " alt="" coords="654,279,687,316,683,319,650,282"/>
+</map>

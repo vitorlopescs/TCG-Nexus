@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
-  ['main_2ecpp_1',['main.cpp',['../main_8cpp.html',1,'']]]
+  ['jsonvaluetostring_0',['jsonValueToString',['../classNexusDbManager.html#a07a4bc0d1b9e368ee7fbb2dafaa76e22',1,'NexusDbManager']]]
 ];
