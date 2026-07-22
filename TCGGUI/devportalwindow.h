@@ -32,7 +32,6 @@ public:
         auto *central = new QWidget(this);
         auto *layout = new QVBoxLayout(central);
 
-        // --- GRUPO 1: Sincronizar Base de Dados ---
         auto *groupImport = new QGroupBox("Sincronizar Base de Dados (Requisito 1)", this);
         auto *layoutImport = new QVBoxLayout(groupImport);
         btnImportarJson = new QPushButton("Importar Arquivo JSON de Cartas", groupImport);
@@ -42,7 +41,6 @@ public:
         layoutImport->addWidget(btnImportarJson);
         layoutImport->addWidget(lblStatusImportacao);
 
-        // --- GRUPO 2: Cadastro de Usuários ---
         auto *groupUsuarios = new QGroupBox("Cadastro de Usuários (Requisitos 4 e 5)", this);
         auto *layoutUsuarios = new QVBoxLayout(groupUsuarios);
         
@@ -81,6 +79,16 @@ public:
         tabelaUsuarios->setObjectName("tabelaUsuarios");
         tabelaUsuarios->setColumnCount(4);
         tabelaUsuarios->setHorizontalHeaderLabels({"ID", "Nome", "E-mail", "Status"});
+
+        btnInativar = new QPushButton("Inativar Usuário Selecionado", groupLista);
+        btnInativar->setObjectName("btnInativar");
+        
+        btnEditarPermissao = new QPushButton("Alterar Nível de Acesso (Admin <-> Lojista)", groupLista);
+        btnEditarPermissao->setObjectName("btnEditarPermissao");
+        
+        layoutLista->addWidget(tabelaUsuarios);
+        layoutLista->addWidget(btnEditarPermissao); // <--- Botão adicionado
+        layoutLista->addWidget(btnInativar);
         
         // Ajustes visuais da tabela
         tabelaUsuarios->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); 
@@ -164,6 +172,31 @@ public:
             }
         });
 
+        connect(btnEditarPermissao, &QPushButton::clicked, [this]() {
+            int row = tabelaUsuarios->currentRow();
+            if(row < 0) {
+                QMessageBox::warning(this, "Aviso", "Selecione um usuário na tabela.");
+                return;
+            }
+            
+            int idTarget = tabelaUsuarios->item(row, 0)->text().toInt();
+            QString perfilAtual = tabelaUsuarios->item(row, 3)->text(); // A coluna 3 exibe o Perfil
+            
+            int idLogado = NexusDbManager::getInstance().getLoggedUserId("admin@tcgnexus.com"); 
+            if(idTarget == idLogado) {
+                QMessageBox::warning(this, "Erro", "Não é possível alterar as próprias permissões de acesso.");
+                return;
+            }
+
+            // Alterna a permissão
+            QString novoPerfil = (perfilAtual == "ADMIN") ? "LOJISTA" : "ADMIN";
+            
+            if(NexusDbManager::getInstance().updateUserProfile(idTarget, novoPerfil)) {
+                QMessageBox::information(this, "Sucesso", QString("Permissão atualizada para %1!").arg(novoPerfil));
+                carregarUsuarios();
+            }
+        });
+
         connect(btnVoltar, &QPushButton::clicked, this, [this]() {
             this->close();
             qApp->exit(1000);
@@ -186,29 +219,31 @@ private:
      * @brief Limpa e popula a tabela de usuários com os dados atualizados do banco.
      */
     void carregarUsuarios() {
-        tabelaUsuarios->setRowCount(0); // Limpa a tabela
+        tabelaUsuarios->setColumnCount(5);
+        tabelaUsuarios->setHorizontalHeaderLabels({"ID", "Nome", "E-mail", "Perfil", "Status"});
+        tabelaUsuarios->setRowCount(0); 
         auto users = NexusDbManager::getInstance().getAllUsers();
         
         for(int i = 0; i < users.size(); ++i) {
             tabelaUsuarios->insertRow(i);
             
-            // Cria os itens para cada célula
             auto *itemId = new QTableWidgetItem(users[i]["id"].toString());
             auto *itemNome = new QTableWidgetItem(users[i]["nome"].toString());
             auto *itemEmail = new QTableWidgetItem(users[i]["email"].toString());
+            auto *itemPerfil = new QTableWidgetItem(users[i]["perfil"].toString());
             auto *itemStatus = new QTableWidgetItem(users[i]["ativo"].toInt() == 1 ? "Ativo" : "Inativo");
             
-            // Bloqueia a edição direta na célula (somente leitura)
             itemId->setFlags(itemId->flags() & ~Qt::ItemIsEditable);
             itemNome->setFlags(itemNome->flags() & ~Qt::ItemIsEditable);
             itemEmail->setFlags(itemEmail->flags() & ~Qt::ItemIsEditable);
+            itemPerfil->setFlags(itemPerfil->flags() & ~Qt::ItemIsEditable);
             itemStatus->setFlags(itemStatus->flags() & ~Qt::ItemIsEditable);
 
-            // Insere os itens na linha
             tabelaUsuarios->setItem(i, 0, itemId);
             tabelaUsuarios->setItem(i, 1, itemNome);
             tabelaUsuarios->setItem(i, 2, itemEmail);
-            tabelaUsuarios->setItem(i, 3, itemStatus);
+            tabelaUsuarios->setItem(i, 3, itemPerfil);
+            tabelaUsuarios->setItem(i, 4, itemStatus);
         }
     }
 };

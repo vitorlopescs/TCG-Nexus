@@ -106,6 +106,14 @@ public:
     static QString generateSalt();
 
     /**
+     * @brief Atualiza o perfil de acesso de um usuário existente (Requisito Storyboard 4).
+     * @param idTarget ID do usuário no banco.
+     * @param novoPerfil "ADMIN" ou "LOJISTA".
+     * @return true se a atualização foi bem-sucedida.
+     */
+    bool updateUserProfile(int idTarget, const QString &novoPerfil);
+
+    /**
      * @brief Gera um hash PBKDF2 iterativo baseado em SHA-512 utilizando uma senha e um Salt.
      * @param senha Senha em texto plano.
      * @param salt Salt associado ao usuário.

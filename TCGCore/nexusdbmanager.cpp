@@ -251,3 +251,11 @@ QVector<QVariantMap> NexusDbManager::getAllUsers() {
     }
     return lista;
 }
+
+bool NexusDbManager::updateUserProfile(int idTarget, const QString &novoPerfil) {
+    QSqlQuery query;
+    query.prepare("UPDATE usuarios SET perfil = :perfil WHERE id = :id");
+    query.bindValue(":perfil", novoPerfil);
+    query.bindValue(":id", idTarget);
+    return query.exec();
+}

@@ -15,7 +15,8 @@ HEADERS += \
     ../TCGGUI/storedashwindow.h \
     ../TCGGUI/devportalwindow.h \
     ../TCGGUI/logindialog.h \
-    ../TCGGUI/recoverdialog.h
+    ../TCGGUI/recoverdialog.h \
+    ../TCGGUI/registerdialog.h \
 
 INCLUDEPATH += ../TCGGUI ../TCGCore
 LIBS += -L../TCGCore -lTCGCore

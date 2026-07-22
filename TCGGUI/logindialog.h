@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include "nexusdbmanager.h"
 #include "recoverdialog.h
+#include "registerdialog.h"
 
 /**
  * @file logindialog.h
@@ -56,6 +57,10 @@ public:
 
         connect(btnEntrar, &QPushButton::clicked, this, &LoginDialog::tentarLogin);
         connect(btnEsqueciSenha, &QPushButton::clicked, [this](){ RecoverDialog r; r.exec(); });
+        connect(btnCriarConta, &QPushButton::clicked, [this](){ 
+            RegisterDialog reg; 
+            reg.exec(); 
+        });
     }
 
     /**
