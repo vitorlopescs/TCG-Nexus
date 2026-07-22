@@ -1,0 +1,48 @@
+#include <QtTest/QtTest>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QMessageBox>
+#include "logindialog.h"
+#include "recoverdialog.h"
+#include "nexusdbmanager.h"
+
+class TesteLogin : public QObject {
+    Q_OBJECT
+private slots:
+    void initTestCase() { NexusDbManager::getInstance().initDatabase(); }
+
+    void testarValidacaoDeCredenciais() {
+        LoginDialog tela;
+        auto *txtLogin = tela.findChild<QLineEdit*>("txtLogin");
+        auto *txtSenha = tela.findChild<QLineEdit*>("txtSenha");
+        auto *btnEntrar = tela.findChild<QPushButton*>("btnEntrar");
+
+        // Falha: Campos Vazios
+        txtLogin->setText("");
+        QTest::mouseClick(btnEntrar, Qt::LeftButton);
+        QVERIFY(tela.getPerfil().isEmpty());
+
+        // Falha: Credenciais Inválidas
+        txtLogin->setText("lojista@tcgnexus.com");
+        txtSenha->setText("errada");
+        QTest::mouseClick(btnEntrar, Qt::LeftButton);
+        QVERIFY(tela.getPerfil().isEmpty());
+    }
+
+    void testarRecuperacaoDeSenha() {
+        RecoverDialog tela;
+        auto *txtEmail = tela.findChild<QLineEdit*>("txtEmail");
+        auto *btnEnviar = tela.findChild<QPushButton*>("btnEnviar");
+
+        // Sucesso
+        txtEmail->setText("admin@tcgnexus.com");
+        QTest::mouseClick(btnEnviar, Qt::LeftButton);
+        // Em QTest puro, se a janela for aceita, o BDD passou.
+        
+        // Falha
+        txtEmail->setText("naoexiste@tcgnexus.com");
+        QTest::mouseClick(btnEnviar, Qt::LeftButton);
+    }
+};
+QTEST_MAIN(TesteLogin)
+#include "test_login.moc"

@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include "nexusdbmanager.h"
+#include "recoverdialog.h
 
 /**
  * @file logindialog.h
@@ -54,6 +55,7 @@ public:
         layout->addWidget(btnCriarConta);
 
         connect(btnEntrar, &QPushButton::clicked, this, &LoginDialog::tentarLogin);
+        connect(btnEsqueciSenha, &QPushButton::clicked, [this](){ RecoverDialog r; r.exec(); });
     }
 
     /**

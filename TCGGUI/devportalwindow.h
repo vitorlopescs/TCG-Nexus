@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWidget>
+#include <QTableWidget> 
+#include <QHeaderView>
 #include "nexusdbmanager.h"
 #include "logindialog.h"
 
