@@ -22,11 +22,12 @@ bool NexusDbManager::initDatabase() {
 
     QSqlQuery query;
     // Tabela estendida para suportar a arquitetura com Salt de segurança dinâmico por usuário
-    query.exec("CREATE TABLE usuarios ("
-               "login VARCHAR(50) PRIMARY KEY, "
-               "senha_hash VARCHAR(128), "
-               "salt VARCHAR(64), "
-               "perfil VARCHAR(20))");
+    query.exec("CREATE TABLE usuarios
+         (email VARCHAR(100) PRIMARY KEY, 
+         nome VARCHAR(100), 
+         senha_hash VARCHAR(128), s
+         alt VARCHAR(64), 
+         perfil VARCHAR(20))");
 
     query.exec("CREATE TABLE cartas ("
                "id VARCHAR(50) PRIMARY KEY, "
