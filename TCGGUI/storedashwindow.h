@@ -26,10 +26,6 @@
 /**
  * @class StoreDashWindow
  * @brief Janela principal do perfil LOJISTA.
- *
- * Implementa o Requisito 2 da Sprint 1: permitir que o lojista pesquise uma
- * carta no catálogo oficial por um atributo técnico (nome, tipo, raridade,
- * etc.) e a adicione ao estoque local informando quantidade e preço de venda.
  */
 class StoreDashWindow : public QMainWindow {
     Q_OBJECT
@@ -38,10 +34,9 @@ public:
      * @brief Constrói a janela do StoreDash e monta o layout de widgets.
      * @param parent Widget pai (opcional, padrão nullptr).
      */
-    //Inicia a tela do lojista
     explicit StoreDashWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
         setWindowTitle("Nexus StoreDash - Gestão de Estoque");
-        resize(480, 440);
+        resize(500, 560);
 
         auto *central = new QWidget(this);
         auto *layout = new QVBoxLayout(central);
@@ -77,7 +72,8 @@ public:
 
         spinQuantidade = new QSpinBox(groupEstoque);
         spinQuantidade->setObjectName("spinQuantidade");
-        spinQuantidade->setMinimum(1);
+        // Habilitado mínimo 0 para permitir que o usuário tente acionar a falha prevista no BDD
+        spinQuantidade->setMinimum(0);
         spinQuantidade->setMaximum(9999);
 
         spinPreco = new QDoubleSpinBox(groupEstoque);
@@ -92,6 +88,23 @@ public:
         layoutEstoque->addWidget(spinPreco);
         layoutEstoque->addWidget(btnAdicionarEstoque);
 
+        // Seção para Atualização de Preço (Requisito exigido pela Sprint 1)
+        auto *groupEditarPreco = new QGroupBox("Atualizar Preço Unitário (Item Selecionado)", this);
+        auto *layoutEditar = new QHBoxLayout(groupEditarPreco);
+        
+        spinNovoPreco = new QDoubleSpinBox(groupEditarPreco);
+        spinNovoPreco->setObjectName("spinNovoPreco");
+        spinNovoPreco->setPrefix("R$ ");
+        // Habilitado negativo apenas para permitir que o usuário/teste tente aplicar preço abaixo de 0 (Cenário BDD)
+        spinNovoPreco->setMinimum(-9999.00); 
+        spinNovoPreco->setMaximum(999999.99);
+        
+        btnAtualizarPreco = new QPushButton("Atualizar Preço", groupEditarPreco);
+        btnAtualizarPreco->setObjectName("btnAtualizarPreco");
+        
+        layoutEditar->addWidget(spinNovoPreco);
+        layoutEditar->addWidget(btnAtualizarPreco);
+
         lblStatusEstoque = new QLabel(this);
         lblStatusEstoque->setObjectName("lblStatusEstoque");
 
@@ -104,11 +117,10 @@ public:
 
         layout->addWidget(groupBusca);
         layout->addWidget(groupEstoque);
+        layout->addWidget(groupEditarPreco);
         layout->addWidget(lblStatusEstoque);
         setCentralWidget(central);
 
-        // Consulta o catálogo oficial (via NexusDbManager) pelo atributo e valor
-        // selecionados, listando os resultados encontrados.
         connect(btnBuscar, &QPushButton::clicked, [this]() {
             listResultados->clear();
             auto resultados = NexusDbManager::getInstance().searchCardsByAttribute(comboAtributo->currentText(), txtValorBusca->text());
@@ -122,38 +134,59 @@ public:
             }
         });
 
-        // Adiciona a carta selecionada na lista de resultados ao estoque local,
-        // com a quantidade e o preço informados.
         connect(btnAdicionarEstoque, &QPushButton::clicked, [this]() {
             auto *itemSelecionado = listResultados->currentItem();
             if (!itemSelecionado) {
                 QMessageBox::warning(this, "Erro", "Selecione uma carta na lista de resultados.");
                 return;
             }
+            
+            // Validação estrita do BDD 1
+            if (spinQuantidade->value() <= 0) {
+                QMessageBox::warning(this, "Erro", "A quantidade deve ser maior que zero");
+                return;
+            }
+
             QString cardId = itemSelecionado->data(Qt::UserRole).toString();
             bool ok = NexusDbManager::getInstance().addCardToStock(cardId, spinQuantidade->value(), spinPreco->value());
             if (ok) {
-                lblStatusEstoque->setText(QString("%1 unidades adicionadas! Total de tipos de cartas no estoque: %2")
-                                              .arg(spinQuantidade->value())
-                                              .arg(NexusDbManager::getInstance().stockItemCount()));
+                lblStatusEstoque->setText(QString("Carta adicionada ao estoque com sucesso! %1 unidades adicionadas")
+                                              .arg(spinQuantidade->value()));
             } else {
                 lblStatusEstoque->setText("Falha ao adicionar item ao estoque.");
             }
         });
 
-        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
+        connect(btnAtualizarPreco, &QPushButton::clicked, [this](){
+            auto *itemSelecionado = listResultados->currentItem();
+            if (!itemSelecionado) {
+                QMessageBox::warning(this, "Erro", "Selecione uma carta para alterar o preço.");
+                return;
+            }
 
+            // Validação estrita do BDD 2
+            if (spinNovoPreco->value() < 0) {
+                QMessageBox::warning(this, "Erro", "Valor inválido. Insira um preço positivo");
+                return;
+            }
+
+            QString cardId = itemSelecionado->data(Qt::UserRole).toString();
+            bool ok = NexusDbManager::getInstance().updateCardPrice(cardId, spinNovoPreco->value());
+            if(ok){
+                QMessageBox::information(this, "Sucesso", "Preço atualizado com sucesso!");
+                lblStatusEstoque->setText("Preço unitário alterado.");
+            }
+        });
+
+        auto *btnVoltar = new QPushButton("Sair / Voltar", central);
         layout->addWidget(btnVoltar);
 
         connect(btnVoltar, &QPushButton::clicked, this, [this]() {
             this->close();
-
             qApp->exit(1000);
         });
-
     }
 
-// atributos
 private:
     QComboBox *comboAtributo;           ///< Seletor do atributo técnico usado na busca.
     QLineEdit *txtValorBusca;           ///< Campo com o valor (ou trecho) a buscar.
@@ -162,6 +195,8 @@ private:
     QSpinBox *spinQuantidade;           ///< Quantidade de unidades a adicionar ao estoque.
     QDoubleSpinBox *spinPreco;          ///< Preço de venda definido pelo lojista.
     QPushButton *btnAdicionarEstoque;   ///< Botão que efetiva a adição ao estoque.
+    QDoubleSpinBox *spinNovoPreco;      ///< Novo valor para atualização de preço.
+    QPushButton *btnAtualizarPreco;     ///< Botão que efetiva a atualização de preço no BD.
     QLabel *lblStatusEstoque;           ///< Rótulo com o resultado da última operação de estoque.
 };
 #endif // STOREDASHWINDOW_H
