@@ -118,6 +118,10 @@ private:
     NexusDbManager() {}
     NexusDbManager(const NexusDbManager&) = delete;
     void operator=(const NexusDbManager&) = delete;
+    bool checkEmailExists(const QString &email);
+    bool deactivateUser(int idTarget, int idLogado);
+    int getLoggedUserId(const QString &email);
+    QVector<QVariantMap> getAllUsers();
 
     /**
      * @brief Converte valores genéricos de JSON (como arrays) para uma string plana.

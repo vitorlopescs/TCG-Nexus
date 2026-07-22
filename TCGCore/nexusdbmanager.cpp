@@ -23,11 +23,13 @@ bool NexusDbManager::initDatabase() {
     QSqlQuery query;
     // Alteração BDD: Chave primária é email, inclusão do nome.
     query.exec("CREATE TABLE usuarios ("
-               "email VARCHAR(100) PRIMARY KEY, "
+               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "email VARCHAR(100) UNIQUE, "
                "nome VARCHAR(100), "
                "senha_hash VARCHAR(128), "
                "salt VARCHAR(64), "
-               "perfil VARCHAR(20))");
+               "perfil VARCHAR(20), "
+               "ativo INTEGER DEFAULT 1)");
 
     query.exec("CREATE TABLE cartas ("
                "id VARCHAR(50) PRIMARY KEY, "
@@ -208,4 +210,44 @@ int NexusDbManager::stockItemCount() {
     QSqlQuery query("SELECT COUNT(*) FROM estoque");
     if (query.next()) return query.value(0).toInt();
     return 0;
+}
+
+bool NexusDbManager::checkEmailExists(const QString &email) {
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM usuarios WHERE email = :email");
+    query.bindValue(":email", email);
+    query.exec();
+    return query.next() && query.value(0).toInt() > 0;
+}
+
+bool NexusDbManager::deactivateUser(int idTarget, int idLogado) {
+    if (idTarget == idLogado) return false; // Regra BDD: Não inativar a si mesmo
+    
+    QSqlQuery query;
+    query.prepare("UPDATE usuarios SET ativo = 0 WHERE id = :id");
+    query.bindValue(":id", idTarget);
+    return query.exec();
+}
+
+int NexusDbManager::getLoggedUserId(const QString &email) {
+    QSqlQuery query;
+    query.prepare("SELECT id FROM usuarios WHERE email = :email");
+    query.bindValue(":email", email);
+    if(query.exec() && query.next()) return query.value(0).toInt();
+    return -1;
+}
+
+QVector<QVariantMap> NexusDbManager::getAllUsers() {
+    QVector<QVariantMap> lista;
+    QSqlQuery query("SELECT id, nome, email, perfil, ativo FROM usuarios");
+    while(query.next()) {
+        QVariantMap u;
+        u["id"] = query.value("id");
+        u["nome"] = query.value("nome");
+        u["email"] = query.value("email");
+        u["perfil"] = query.value("perfil");
+        u["ativo"] = query.value("ativo");
+        lista.append(u);
+    }
+    return lista;
 }
