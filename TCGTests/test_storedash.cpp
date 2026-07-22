@@ -43,7 +43,7 @@ private slots:
     void testarValidacaoDeQuantidadeEAdicao() {
         StoreDashWindow tela;
         tela.show();
-        QTest::qWaitForWindowExposed(&tela);
+        QVERIFY(QTest::qWaitForWindowExposed(&tela));
 
         auto *comboAtributo = tela.findChild<QComboBox*>("comboAtributo");
         auto *txtValorBusca = tela.findChild<QLineEdit*>("txtValorBusca");
@@ -78,7 +78,7 @@ private slots:
     void testarAtualizacaoDePreco() {
         StoreDashWindow tela;
         tela.show();
-        QTest::qWaitForWindowExposed(&tela);
+        QVERIFY(QTest::qWaitForWindowExposed(&tela));
 
         auto *comboAtributo = tela.findChild<QComboBox*>("comboAtributo");
         auto *txtValorBusca = tela.findChild<QLineEdit*>("txtValorBusca");
@@ -101,5 +101,9 @@ private slots:
         QTest::qWait(100);
     }
 };
-QTEST_MAIN(TesteStoreDash)
+
+int runTesteStoreDash(int argc, char *argv[]) {
+    TesteStoreDash tc;
+    return QTest::qExec(&tc, argc, argv);
+}
 #include "test_storedash.moc"

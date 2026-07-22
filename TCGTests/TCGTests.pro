@@ -3,6 +3,7 @@ TEMPLATE = app
 CONFIG += console warn_on testcase c++14
 
 SOURCES += \
+    main.cpp \
     test_storedash.cpp \
     test_login.cpp \
     test_devportal.cpp

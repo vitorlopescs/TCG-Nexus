@@ -39,5 +39,8 @@ private slots:
         QTest::mouseClick(btnEnviar, Qt::LeftButton);
     }
 };
-QTEST_MAIN(TesteLogin)
+int runTesteLogin(int argc, char *argv[]) {
+    TesteLogin tc;
+    return QTest::qExec(&tc, argc, argv);
+}
 #include "test_login.moc"

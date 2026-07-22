@@ -32,5 +32,8 @@ private slots:
         QVERIFY(NexusDbManager::getInstance().deactivateUser(idAdmin, idAdmin) == false); 
     }
 };
-QTEST_MAIN(TesteDevPortal)
+int runTesteDevPortal(int argc, char *argv[]) {
+    TesteDevPortal tc;
+    return QTest::qExec(&tc, argc, argv);
+}
 #include "test_devportal.moc"
