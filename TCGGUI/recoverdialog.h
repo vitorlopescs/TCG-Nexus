@@ -10,12 +10,16 @@
 #include "nexusdbmanager.h"
 
 /**
- * @file recoverdialog.h
- * @brief Tela para redefinição de senha (Requisito BDD).
+ * @class RecoverDialog
+ * @brief Dialog modal para solicitação de redefinição de senha.
  */
 class RecoverDialog : public QDialog {
     Q_OBJECT
 public:
+    /**
+     * @brief Constrói a interface de recuperação de acesso.
+     * @param parent Widget pai (opcional, padrão nullptr).
+     */
     explicit RecoverDialog(QWidget *parent = nullptr) : QDialog(parent) {
         setWindowTitle("Nexus - Recuperar Senha");
         resize(300, 150);

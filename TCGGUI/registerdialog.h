@@ -10,12 +10,16 @@
 #include "nexusdbmanager.h"
 
 /**
- * @file registerdialog.h
- * @brief Tela de auto-cadastro para novos usuários (Storyboard 1).
+ * @class RegisterDialog
+ * @brief Dialog modal para auto-cadastro de novos usuários no sistema.
  */
 class RegisterDialog : public QDialog {
     Q_OBJECT
 public:
+    /**
+     * @brief Constrói a tela de criação de conta e inicializa os componentes visuais.
+     * @param parent Widget pai (opcional, padrão nullptr).
+     */
     explicit RegisterDialog(QWidget *parent = nullptr) : QDialog(parent) {
         setWindowTitle("Nexus - Criar Conta");
         resize(300, 200);

@@ -213,7 +213,8 @@ private:
     QPushButton *btnCadastrarUsuario;  
     
     QTableWidget *tabelaUsuarios;      
-    QPushButton *btnInativar;          
+    QPushButton *btnInativar;     
+    QPushButton *btnEditarPermissao;     
 
     /**
      * @brief Limpa e popula a tabela de usuários com os dados atualizados do banco.
