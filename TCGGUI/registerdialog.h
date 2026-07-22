@@ -10,6 +10,11 @@
 #include "nexusdbmanager.h"
 
 /**
+ * @file registerdialog.h
+ * @brief Tela de auto-cadastro para novos usuários (Storyboard 1).
+ */
+
+/**
  * @class RegisterDialog
  * @brief Dialog modal para auto-cadastro de novos usuários no sistema.
  */
@@ -53,7 +58,6 @@ public:
                 return;
             }
             
-            // O auto-cadastro cria a conta com privilégios de LOJISTA por padrão
             bool ok = NexusDbManager::getInstance().registerUser(
                 txtNome->text(), 
                 txtEmail->text(), 

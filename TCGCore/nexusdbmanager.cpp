@@ -14,14 +14,10 @@
 
 bool NexusDbManager::initDatabase() {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(":memory:"); // SQLite embutido em memória para isolamento do MVP
-    if (!db.open()) {
-        qDebug() << "Erro crítico ao inicializar banco SQLite em memória:" << db.lastError().text();
-        return false;
-    }
+    db.setDatabaseName(":memory:");
+    if (!db.open()) return false;
 
     QSqlQuery query;
-    // Alteração BDD: Chave primária é email, inclusão do nome.
     query.exec("CREATE TABLE usuarios ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "email VARCHAR(100) UNIQUE, "
@@ -50,8 +46,7 @@ bool NexusDbManager::initDatabase() {
                "preco REAL, "
                "FOREIGN KEY(carta_id) REFERENCES cartas(id))");
 
-    // Semente padrão do MVP: Criando conta mestre via e-mail e nome
-    registerUser("Administrador Mestre", "admin@tcgnexus.com", "123", "ADMIN");
+    registerUser("Administrador Mestre", "admin@tcgnexus.com", "senha123", "ADMIN");
     return true;
 }
 
@@ -74,11 +69,7 @@ QString NexusDbManager::hashPasswordWithSalt(const QString &senha, const QString
 bool NexusDbManager::registerUser(const QString &nome, const QString &email, const QString &senha, const QString &perfil) {
     if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) return false;
 
-    QSqlQuery checa;
-    checa.prepare("SELECT COUNT(*) FROM usuarios WHERE email = :email");
-    checa.bindValue(":email", email);
-    checa.exec();
-    if (checa.next() && checa.value(0).toInt() > 0) return false; // E-mail duplicado barrado
+    if(checkEmailExists(email)) return false;
 
     QString salt = generateSalt();
     QString hash = hashPasswordWithSalt(senha, salt);
@@ -95,7 +86,7 @@ bool NexusDbManager::registerUser(const QString &nome, const QString &email, con
 
 QString NexusDbManager::authenticateUser(const QString &email, const QString &senha) {
     QSqlQuery query;
-    query.prepare("SELECT senha_hash, salt, perfil FROM usuarios WHERE email = :email");
+    query.prepare("SELECT senha_hash, salt, perfil FROM usuarios WHERE email = :email AND ativo = 1");
     query.bindValue(":email", email);
     query.exec();
 
@@ -109,6 +100,54 @@ QString NexusDbManager::authenticateUser(const QString &email, const QString &se
         }
     }
     return QString();
+}
+
+bool NexusDbManager::checkEmailExists(const QString &email) {
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM usuarios WHERE email = :email");
+    query.bindValue(":email", email);
+    query.exec();
+    return query.next() && query.value(0).toInt() > 0;
+}
+
+bool NexusDbManager::deactivateUser(int idTarget, int idLogado) {
+    if (idTarget == idLogado) return false;
+    
+    QSqlQuery query;
+    query.prepare("UPDATE usuarios SET ativo = 0 WHERE id = :id");
+    query.bindValue(":id", idTarget);
+    return query.exec();
+}
+
+bool NexusDbManager::updateUserProfile(int idTarget, const QString &novoPerfil) {
+    QSqlQuery query;
+    query.prepare("UPDATE usuarios SET perfil = :perfil WHERE id = :id");
+    query.bindValue(":perfil", novoPerfil);
+    query.bindValue(":id", idTarget);
+    return query.exec();
+}
+
+int NexusDbManager::getLoggedUserId(const QString &email) {
+    QSqlQuery query;
+    query.prepare("SELECT id FROM usuarios WHERE email = :email");
+    query.bindValue(":email", email);
+    if(query.exec() && query.next()) return query.value(0).toInt();
+    return -1;
+}
+
+QVector<QVariantMap> NexusDbManager::getAllUsers() {
+    QVector<QVariantMap> lista;
+    QSqlQuery query("SELECT id, nome, email, perfil, ativo FROM usuarios");
+    while(query.next()) {
+        QVariantMap u;
+        u["id"] = query.value("id");
+        u["nome"] = query.value("nome");
+        u["email"] = query.value("email");
+        u["perfil"] = query.value("perfil");
+        u["ativo"] = query.value("ativo");
+        lista.append(u);
+    }
+    return lista;
 }
 
 QString NexusDbManager::jsonValueToString(const QJsonValue &value) const {
@@ -198,7 +237,6 @@ bool NexusDbManager::addCardToStock(const QString &cardId, int quantidade, doubl
 
 bool NexusDbManager::updateCardPrice(const QString &cardId, double novoPreco) {
     if(novoPreco < 0) return false;
-    
     QSqlQuery update;
     update.prepare("UPDATE estoque SET preco = :preco WHERE carta_id = :id");
     update.bindValue(":preco", novoPreco);
@@ -210,52 +248,4 @@ int NexusDbManager::stockItemCount() {
     QSqlQuery query("SELECT COUNT(*) FROM estoque");
     if (query.next()) return query.value(0).toInt();
     return 0;
-}
-
-bool NexusDbManager::checkEmailExists(const QString &email) {
-    QSqlQuery query;
-    query.prepare("SELECT COUNT(*) FROM usuarios WHERE email = :email");
-    query.bindValue(":email", email);
-    query.exec();
-    return query.next() && query.value(0).toInt() > 0;
-}
-
-bool NexusDbManager::deactivateUser(int idTarget, int idLogado) {
-    if (idTarget == idLogado) return false; // Regra BDD: Não inativar a si mesmo
-    
-    QSqlQuery query;
-    query.prepare("UPDATE usuarios SET ativo = 0 WHERE id = :id");
-    query.bindValue(":id", idTarget);
-    return query.exec();
-}
-
-int NexusDbManager::getLoggedUserId(const QString &email) {
-    QSqlQuery query;
-    query.prepare("SELECT id FROM usuarios WHERE email = :email");
-    query.bindValue(":email", email);
-    if(query.exec() && query.next()) return query.value(0).toInt();
-    return -1;
-}
-
-QVector<QVariantMap> NexusDbManager::getAllUsers() {
-    QVector<QVariantMap> lista;
-    QSqlQuery query("SELECT id, nome, email, perfil, ativo FROM usuarios");
-    while(query.next()) {
-        QVariantMap u;
-        u["id"] = query.value("id");
-        u["nome"] = query.value("nome");
-        u["email"] = query.value("email");
-        u["perfil"] = query.value("perfil");
-        u["ativo"] = query.value("ativo");
-        lista.append(u);
-    }
-    return lista;
-}
-
-bool NexusDbManager::updateUserProfile(int idTarget, const QString &novoPerfil) {
-    QSqlQuery query;
-    query.prepare("UPDATE usuarios SET perfil = :perfil WHERE id = :id");
-    query.bindValue(":perfil", novoPerfil);
-    query.bindValue(":id", idTarget);
-    return query.exec();
 }

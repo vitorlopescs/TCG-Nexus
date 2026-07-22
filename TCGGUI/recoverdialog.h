@@ -10,6 +10,11 @@
 #include "nexusdbmanager.h"
 
 /**
+ * @file recoverdialog.h
+ * @brief Tela para redefinição de senha (Requisito BDD).
+ */
+
+/**
  * @class RecoverDialog
  * @brief Dialog modal para solicitação de redefinição de senha.
  */

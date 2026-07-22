@@ -23,17 +23,9 @@
  * @brief Janela do módulo StoreDash: busca de cartas por atributo e gestão de estoque local.
  */
 
-/**
- * @class StoreDashWindow
- * @brief Janela principal do perfil LOJISTA.
- */
 class StoreDashWindow : public QMainWindow {
     Q_OBJECT
 public:
-    /**
-     * @brief Constrói a janela do StoreDash e monta o layout de widgets.
-     * @param parent Widget pai (opcional, padrão nullptr).
-     */
     explicit StoreDashWindow(QWidget *parent = nullptr) : QMainWindow(parent) {
         setWindowTitle("Nexus StoreDash - Gestão de Estoque");
         resize(500, 560);
@@ -72,7 +64,6 @@ public:
 
         spinQuantidade = new QSpinBox(groupEstoque);
         spinQuantidade->setObjectName("spinQuantidade");
-        // Habilitado mínimo 0 para permitir que o usuário tente acionar a falha prevista no BDD
         spinQuantidade->setMinimum(0);
         spinQuantidade->setMaximum(9999);
 
@@ -88,14 +79,12 @@ public:
         layoutEstoque->addWidget(spinPreco);
         layoutEstoque->addWidget(btnAdicionarEstoque);
 
-        // Seção para Atualização de Preço (Requisito exigido pela Sprint 1)
         auto *groupEditarPreco = new QGroupBox("Atualizar Preço Unitário (Item Selecionado)", this);
         auto *layoutEditar = new QHBoxLayout(groupEditarPreco);
         
         spinNovoPreco = new QDoubleSpinBox(groupEditarPreco);
         spinNovoPreco->setObjectName("spinNovoPreco");
         spinNovoPreco->setPrefix("R$ ");
-        // Habilitado negativo apenas para permitir que o usuário/teste tente aplicar preço abaixo de 0 (Cenário BDD)
         spinNovoPreco->setMinimum(-9999.00); 
         spinNovoPreco->setMaximum(999999.99);
         
@@ -141,7 +130,6 @@ public:
                 return;
             }
             
-            // Validação estrita do BDD 1
             if (spinQuantidade->value() <= 0) {
                 QMessageBox::warning(this, "Erro", "A quantidade deve ser maior que zero");
                 return;
@@ -164,7 +152,6 @@ public:
                 return;
             }
 
-            // Validação estrita do BDD 2
             if (spinNovoPreco->value() < 0) {
                 QMessageBox::warning(this, "Erro", "Valor inválido. Insira um preço positivo");
                 return;
@@ -188,15 +175,15 @@ public:
     }
 
 private:
-    QComboBox *comboAtributo;           ///< Seletor do atributo técnico usado na busca.
-    QLineEdit *txtValorBusca;           ///< Campo com o valor (ou trecho) a buscar.
-    QPushButton *btnBuscar;             ///< Botão que dispara a busca no catálogo.
-    QListWidget *listResultados;        ///< Lista com as cartas encontradas na busca.
-    QSpinBox *spinQuantidade;           ///< Quantidade de unidades a adicionar ao estoque.
-    QDoubleSpinBox *spinPreco;          ///< Preço de venda definido pelo lojista.
-    QPushButton *btnAdicionarEstoque;   ///< Botão que efetiva a adição ao estoque.
-    QDoubleSpinBox *spinNovoPreco;      ///< Novo valor para atualização de preço.
-    QPushButton *btnAtualizarPreco;     ///< Botão que efetiva a atualização de preço no BD.
-    QLabel *lblStatusEstoque;           ///< Rótulo com o resultado da última operação de estoque.
+    QComboBox *comboAtributo;           
+    QLineEdit *txtValorBusca;           
+    QPushButton *btnBuscar;             
+    QListWidget *listResultados;        
+    QSpinBox *spinQuantidade;           
+    QDoubleSpinBox *spinPreco;          
+    QPushButton *btnAdicionarEstoque;   
+    QDoubleSpinBox *spinNovoPreco;      
+    QPushButton *btnAtualizarPreco;     
+    QLabel *lblStatusEstoque;           
 };
 #endif // STOREDASHWINDOW_H
